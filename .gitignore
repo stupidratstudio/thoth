@@ -1,0 +1,4 @@
+.import/
+*.swp
+variables.sh
+old.version.txt
