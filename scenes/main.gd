@@ -17,18 +17,16 @@ func _process(_delta):
 
 func addNewObj(object, newPosition = null):
 	var o = object.instance()
-	o.global_transform.origin = Vector2(floor(randf()*15), floor(randf()*10))*64
+	o.position = Vector2(floor(randf()*15), floor(randf()*10))*64
 	if newPosition != null:
-		o.global_transform.origin = newPosition
-	add_child(o)
+		o.position = newPosition
+	$objects.add_child(o)
 
-func _input(event):
+func _unhandled_input(event):
+	if event is InputEventMouseMotion:
+		$Area2D.position = event.position
 	if event is InputEventMouseButton:
 		if event.pressed and event.button_index == 1:
-			$Area2DMouse.monitoring = true
-			$Area2DMouse.position = event.position
-			if $Area2DMouse.get_overlapping_areas().size() <= 1:
-				var pos = event.position
-				pos.x = floor(pos.x/64)*64
-				pos.y = floor(pos.y/64)*64
-				addNewObj(obj0, pos)
+			if $Area2D.get_overlapping_areas().size() == 0:
+				addNewObj(obj0, $Area2D.position)
+				get_tree().set_input_as_handled()

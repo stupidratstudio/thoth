@@ -3,10 +3,11 @@ extends Node2D
 var followCursor = false
 
 func _ready():
-	print(filename)
-	print(name)
+	#print(filename)
+	#print(name)
+	pass
 
-func _input(event):
+func _unhandled_input(event):
 	if followCursor:
 		if event is InputEventMouseMotion:
 			position = event.position
@@ -53,8 +54,7 @@ func findNewSpot():
 	$Tween2.interpolate_property(self, "rotation", rotation, deg2rad(90*(randi()%4)), 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween2.start()
 
-
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
-		if event.pressed and event.button_index == 1:
-			followCursor = !followCursor
+		if event.button_index == 3:
+			followCursor = event.pressed
