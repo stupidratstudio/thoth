@@ -18,7 +18,6 @@ func _ready():
 
 func save_exists(filename):
 	var file = File.new()
-	delete file
 	return file.file_exists("user://" + filename + ".sav")
 
 func set_load_map(map_name):
@@ -119,6 +118,12 @@ func _refresh_game_state():
 	_loaded_game_state.level = new_data.level
 	_loaded_game_state.instances[new_data.level] = new_data.instances[new_data.level]
 
+func _serialize(node):
+	return null
+
+func _deserialize(input):
+	return null
+
 func _serialize_game(game):
 	var data = {
 		"player" : {},
@@ -161,41 +166,6 @@ func _serialize_object(object):
 		data["data"] = object_data
 	return data
 
-func _serialize_variable(variable):
-	var data = {}
-	if typeof(variable) == TYPE_NIL:
-		return null
-	if typeof(variable) == TYPE_VECTOR3:
-		data = {
-			"type": "vector3",
-			"x" : variable.x,
-			"y" : variable.y,
-			"z" : variable.z
-		}
-	elif typeof(variable) == TYPE_VECTOR2:
-		data = {
-			"type": "vector2",
-			"x" : variable.x,
-			"y" : variable.y
-		}
-	elif typeof(variable) == TYPE_ARRAY:
-		var array = []
-		for entry in variable:
-			array.push_back(_serialize_variable(entry))
-		data = {
-			"type": "array",
-			"data": array
-		}
-	elif typeof(variable) == TYPE_OBJECT:
-		if not is_instance_valid(variable):
-			return null
-		data = {
-			"type": "object",
-			"name" : variable.name.replace("@","")
-		}
-	else:
-		data = variable
-	return data
 
 func _deserialize_object_instance(data):
 	var object = load("res://objects/" + data.type + ".tscn").instance()
@@ -213,23 +183,78 @@ func _deserialize_object_data(object, object_name, data):
 				object.set(name, _deserialize_variable(data.data[name]))
 	return object
 
-func _deserialize_variable(data):
-	if typeof(data) != TYPE_DICTIONARY:
-		return data
+func _serialize_variable(variable):
+	if typeof(variable) == TYPE_NIL:
+		return null
 
-	if data.type == "vector3":
-		return Vector3(
-			data.x,
-			data.y,
-			data.z
-		)
-	elif data.type == "vector2":
-		return Vector2(
-			data.x,
-			data.y
-		)
-	elif data.type == "array":
+	if typeof(variable) == TYPE_VECTOR2:
+		return {
+			"type": "vector2",
+			"x" : variable.x,
+			"y" : variable.y
+		}
+
+	if typeof(variable) == TYPE_VECTOR3:
+		return {
+			"type": "vector3",
+			"x" : variable.x,
+			"y" : variable.y,
+			"z" : variable.z
+		}
+
+	if typeof(variable) == TYPE_ARRAY:
 		var array = []
-		for entry in data.data:
+		for entry in variable:
+			array.push_back(_serialize_variable(entry))
+		return {
+			"type": "array",
+			"data": array
+		}
+
+	if typeof(variable) == TYPE_OBJECT:
+		if not is_instance_valid(variable):
+			return null
+		var data = {
+			"type" : "object",
+			"filename": variable.filename,
+			"position" : _serialize_variable(variable.global_transform.origin),
+			"scale" : _serialize_variable(variable.scale)
+		}
+		var object_data = {}
+		if variable.get("serializable"):
+			var variables = variable.serializable
+			for name in variables:
+				var serialized = _serialize_variable(variable.get(name))
+				if serialized != null:
+					object_data[name] = serialized
+			data["data"] = object_data
+		return data
+		return {
+			"type": "object",
+			"name" : variable.name.replace("@","")
+		}
+
+	return variable
+
+func _deserialize_variable(input):
+	if typeof(input) != TYPE_DICTIONARY:
+		return input
+
+	if input.type == "vector2":
+		return Vector2(
+			input.x,
+			input.y
+		)
+
+	if input.type == "vector3":
+		return Vector3(
+			input.x,
+			input.y,
+			input.z
+		)
+
+	if input.type == "array":
+		var array = []
+		for entry in input.data:
 			array.push_back(_deserialize_variable(entry))
 		return array
