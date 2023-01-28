@@ -23,6 +23,9 @@ func addNewObj(object, newPosition = null):
 	$objects.add_child(o)
 
 func _unhandled_input(event):
+	if event is InputEventKey:
+		if event.pressed and event.scancode == KEY_A:
+			addNewObj(obj0)
 	if event is InputEventMouseMotion:
 		$Area2D.position = event.position
 	if event is InputEventMouseButton:

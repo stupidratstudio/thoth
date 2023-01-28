@@ -3,8 +3,6 @@ extends Node2D
 var followCursor = false
 
 func _ready():
-	#print(filename)
-	#print(name)
 	pass
 
 func _unhandled_input(event):
@@ -33,7 +31,7 @@ func findNewSpot():
 
 	var newPos = position
 	
-	var d = 32
+	var d = 32 * scale.x
 
 	if dirX == 1:
 		newPos.x += d
@@ -45,16 +43,31 @@ func findNewSpot():
 	if dirY == 2:
 		newPos.y -= d
 
-	newPos.x = floor(newPos.x / d)*d
-	newPos.y = floor(newPos.y / d)*d
+	newPos = position+Vector2.RIGHT.rotated(randf()*2*PI)*d
+
+	#newPos.x = int(newPos.x / d)*d
+	#newPos.y = int(newPos.y / d)*d
 
 	$Tween.stop(self, "position")
-	$Tween.interpolate_property(self, "position", position, newPos, 0.1, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property(self, "position", position, newPos, 0.1*scale.x, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.start()
-	$Tween2.interpolate_property(self, "rotation", rotation, deg2rad(90*(randi()%4)), 0.3, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween2.interpolate_property(self, "rotation", rotation, deg2rad(90*(randi()%4)), 0.3*scale.x, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween2.start()
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
-		if event.button_index == 3:
+		if event.pressed and event.button_index == BUTTON_WHEEL_UP:
+			$Icon.modulate.r = 0
+			$Icon.modulate.g = 0
+			$Icon.modulate.b = 0
+			while $Icon.modulate.r == 0 and $Icon.modulate.g == 0 and $Icon.modulate.b == 0:
+				$Icon.modulate.r = (randi()%3)*0.5
+				$Icon.modulate.g = (randi()%3)*0.5
+				$Icon.modulate.b = (randi()%3)*0.5
+		if event.pressed and event.button_index == BUTTON_WHEEL_DOWN:
+			var newScale = randi()%4 + 1
+			scale = Vector2.ONE * newScale
+		if event.button_index == BUTTON_RIGHT:
+			queue_free()
+		if event.button_index == BUTTON_MIDDLE:
 			followCursor = event.pressed
