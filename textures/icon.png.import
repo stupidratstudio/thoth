@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ibis1.png-beab8964d432112e76b090da88bc5f43.stex"
+path="res://.import/icon.png-f931f6b997c470ed41f337ac62349254.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ibis1.png"
-dest_files=[ "res://.import/ibis1.png-beab8964d432112e76b090da88bc5f43.stex" ]
+source_file="res://textures/icon.png"
+dest_files=[ "res://.import/icon.png-f931f6b997c470ed41f337ac62349254.stex" ]
 
 [params]
 

@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ibis2.png-4d6c6776559cac13aaba242968739172.stex"
+path="res://.import/ibis2.png-da13811d624311724fa32f5b2c2ad937.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://ibis2.png"
-dest_files=[ "res://.import/ibis2.png-4d6c6776559cac13aaba242968739172.stex" ]
+source_file="res://textures/ibis2.png"
+dest_files=[ "res://.import/ibis2.png-da13811d624311724fa32f5b2c2ad937.stex" ]
 
 [params]
 

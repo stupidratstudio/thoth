@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/tileset.png-a39e944f25b35d62f55d4f98a36e2b5e.stex"
+path="res://.import/ibis0.png-47e8e5a96153e63224e2b3b4e695991a.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://tileset.png"
-dest_files=[ "res://.import/tileset.png-a39e944f25b35d62f55d4f98a36e2b5e.stex" ]
+source_file="res://textures/ibis0.png"
+dest_files=[ "res://.import/ibis0.png-47e8e5a96153e63224e2b3b4e695991a.stex" ]
 
 [params]
 
