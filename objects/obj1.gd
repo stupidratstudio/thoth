@@ -13,42 +13,22 @@ func _unhandled_input(event):
 func _on_Area2D_area_entered(area):
 	findNewSpot()
 
-func _on_Timer_timeout():
-	if position.x < 0 or position.y < 0 or position.x > 1920 or position.y > 1080:
-		queue_free()
-	if $Area2D.get_overlapping_areas().size() > 0:
-		findNewSpot()
-
 func findNewSpot():
 	if followCursor:
 		return
 
-	var dirX = 0
-	var dirY = 0
-	while dirX == 0 and dirY == 0:
-		dirX = randi()%3
-		dirY = randi()%3
+	var dirX = randi()%10 + 1
+	var dirY = randi()%10 + 1
 
 	var d = 32 * scale.x
 
-	var newPos = position
-	newPos.x = int(newPos.x / d)*d
-	newPos.y = int(newPos.y / d)*d
+	var newScale = scale
+	newScale.x = dirX/5.0
+	newScale.y = dirY/5.0
 
-	if dirX == 1:
-		newPos.x += d
-	if dirX == 2:
-		newPos.x -= d
-	
-	if dirY == 1:
-		newPos.y += d
-	if dirY == 2:
-		newPos.y -= d
-
-	$Tween.stop(self, "position")
-	$Tween.interpolate_property(self, "position", position, newPos, 0.1*scale.x, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween.interpolate_property(self, "scale", scale, newScale, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.start()
-	$Tween2.interpolate_property(self, "rotation", rotation, deg2rad(90*(randi()%4)), 0.3*scale.x, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
+	$Tween2.interpolate_property(self, "rotation", rotation, deg2rad(45*(randi()%8)), 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween2.start()
 
 func _on_Area2D_input_event(viewport, event, shape_idx):

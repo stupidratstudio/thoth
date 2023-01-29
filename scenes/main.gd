@@ -1,6 +1,9 @@
 extends Node2D
 
 onready var obj0 = preload("res://objects/obj0.tscn")
+onready var obj1 = preload("res://objects/obj1.tscn")
+onready var obj2 = preload("res://objects/obj2.tscn")
+onready var obj3 = preload("res://objects/obj3.tscn")
 
 var toAdd = 0
 
@@ -24,12 +27,14 @@ func addNewObj(object, newPosition = null):
 
 func _unhandled_input(event):
 	if event is InputEventKey:
-		if event.pressed and event.scancode == KEY_A:
-			addNewObj(obj0)
+		if $Area2D.get_overlapping_areas().size() == 0:
+			if event.pressed and event.scancode == KEY_1:
+				addNewObj(obj0, $Area2D.position)
+			if event.pressed and event.scancode == KEY_2:
+				addNewObj(obj1, $Area2D.position)
+			if event.pressed and event.scancode == KEY_3:
+				addNewObj(obj2, $Area2D.position)
+			if event.pressed and event.scancode == KEY_4:
+				addNewObj(obj3, $Area2D.position)
 	if event is InputEventMouseMotion:
 		$Area2D.position = event.position
-	if event is InputEventMouseButton:
-		if event.pressed and event.button_index == 1:
-			if $Area2D.get_overlapping_areas().size() == 0:
-				addNewObj(obj0, $Area2D.position)
-				get_tree().set_input_as_handled()
