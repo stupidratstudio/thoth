@@ -1,0 +1,46 @@
+{
+    "data":{
+    },
+    "versions":{
+        "$version_name":{
+            {
+                "data":{
+                },
+                "maps":{
+                    "$map_file_name.tscn": {
+                        "data":{
+                        },
+                        "collections":{
+                            "$group_name":{
+                                "$object_name":{
+                                    "type": "object",
+                                    "filename": "scene.tscn",
+                                    "variables":{
+                                        "$pi": 3.1415926536,
+                                        "$vector2_name": {
+                                            "type": "vector2",
+                                            "x": 1,
+                                            "y": 1
+                                        },
+                                        "$vector3_name": {
+                                            "type": "vector3",
+                                            "x": 1,
+                                            "y": 1,
+                                            "z": 1
+                                        },
+                                        "$array_name": {
+                                            "type": "array",
+                                            "data": []
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "objects":{
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
