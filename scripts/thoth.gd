@@ -148,23 +148,11 @@ func _serialize_game(game):
 
 	return data
 
-func _deserialize_object_instance(data):
-	var object = load("res://objects/" + data.type + ".tscn").instance()
-	return object
+######################################
+## data serialization/deserialization
+######################################
 
-func _deserialize_object_data(object, object_name, data):
-	object.name = object_name
-	object.scale = _deserialize_variable(data.scale)
-	object.global_transform.origin = _deserialize_variable(data.position)
-
-	if object.get("serializable"):
-		var variables = object.serializable
-		for name in variables:
-			if data.data.get(name) != null:
-				object.set(name, _deserialize_variable(data.data[name]))
-	return object
-
-func _serialize_variable(variable):
+func _serialize_variable(variable, object_convert_to_references = false):
 	match typeof(variable):
 		TYPE_NIL:
 			return null
@@ -175,6 +163,8 @@ func _serialize_variable(variable):
 		TYPE_ARRAY:
 			return _serialize_array(variable)
 		TYPE_OBJECT:
+			if object_convert_to_references:
+				return _serialize_object_reference(variable)
 			return _serialize_object(variable)
 
 	return variable
@@ -192,6 +182,8 @@ func _deserialize_variable(input):
 			return _deserialize_array(input)
 		"object":
 			return _deserialize_object(input)
+		"object_reference":
+			return input
 
 	return null
 
@@ -228,17 +220,25 @@ func _serialize_object(input):
 		return null
 	var object_variables = {}
 	if input.get("serializable"):
-		for variable in input.serializable:
-			var serialized = _serialize_variable(input.get(variable))
+		var variables = input.serializable
+		for variable in variables:
+			var serialized = _serialize_variable(input.get(variable), true)
 			if serialized != null:
 				object_variables[variable] = serialized
 	return {
 		"type" : "object",
+		"name": input.name,
 		"filename": input.filename,
 		"position" : _serialize_variable(input.global_translation),
 		"scale" : _serialize_variable(input.scale),
 		"rotation": _serialize_variable(input.global_rotation),
 		"variables": object_variables
+	}
+
+func _serialize_object_reference(input):
+	return {
+		"type" : "object_reference",
+		"name": input.name
 	}
 
 ######################################
@@ -263,3 +263,17 @@ func _deserialize_array(input):
 	for entry in input.data:
 		array.push_back(_deserialize_variable(entry))
 	return array
+
+func _deserialize_object(input):
+	var object = load(input.filename).instance()
+	object.name = input.name
+	object.global_translation = _deserialize_variable(data.position)
+	object.scale = _deserialize_variable(data.scale)
+	object.global_rotation = _deserialize_variable(data.rotation)
+	if object.get("serializable"):
+		var variables = object.serializable
+		for variable_name in variables:
+			var variable_value = input.variables.get(variable)
+			if variable_value != null:
+				object.set(variable_name, _deserialize_variable(variable_value))
+	return object

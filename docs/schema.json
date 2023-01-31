@@ -14,6 +14,7 @@
                             "$group_name":{
                                 "$object_name":{
                                     "type": "object",
+                                    "name": "$object_name",
                                     "filename": "scene.tscn",
                                     "position": {},
                                     "scale": {},
@@ -34,6 +35,10 @@
                                         "$array_name": {
                                             "type": "array",
                                             "data": []
+                                        },
+                                        "$object_reference": {
+                                            "type": "object_reference",
+                                            "name": "$object_reference_name"
                                         }
                                     }
                                 }
