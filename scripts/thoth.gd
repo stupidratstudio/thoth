@@ -148,25 +148,6 @@ func _serialize_game(game):
 
 	return data
 
-func _serialize_object(object):
-	var name_id = object.filename
-	var object_type = name_id.substr(14, name_id.length()-19)
-	var data = {
-		"type" : object_type,
-		"position" : _serialize_variable(object.global_transform.origin),
-		"scale" : _serialize_variable(object.scale)
-	}
-	var object_data = {}
-	if object.get("serializable"):
-		var variables = object.serializable
-		for name in variables:
-			var serialized = _serialize_variable(object.get(name))
-			if serialized != null:
-				object_data[name] = serialized
-		data["data"] = object_data
-	return data
-
-
 func _deserialize_object_instance(data):
 	var object = load("res://objects/" + data.type + ".tscn").instance()
 	return object
@@ -184,55 +165,17 @@ func _deserialize_object_data(object, object_name, data):
 	return object
 
 func _serialize_variable(variable):
-	if typeof(variable) == TYPE_NIL:
-		return null
-
-	if typeof(variable) == TYPE_VECTOR2:
-		return {
-			"type": "vector2",
-			"x" : variable.x,
-			"y" : variable.y
-		}
-
-	if typeof(variable) == TYPE_VECTOR3:
-		return {
-			"type": "vector3",
-			"x" : variable.x,
-			"y" : variable.y,
-			"z" : variable.z
-		}
-
-	if typeof(variable) == TYPE_ARRAY:
-		var array = []
-		for entry in variable:
-			array.push_back(_serialize_variable(entry))
-		return {
-			"type": "array",
-			"data": array
-		}
-
-	if typeof(variable) == TYPE_OBJECT:
-		if not is_instance_valid(variable):
+	match typeof(variable):
+		TYPE_NIL:
 			return null
-		var data = {
-			"type" : "object",
-			"filename": variable.filename,
-			"position" : _serialize_variable(variable.global_transform.origin),
-			"scale" : _serialize_variable(variable.scale)
-		}
-		var object_data = {}
-		if variable.get("serializable"):
-			var variables = variable.serializable
-			for name in variables:
-				var serialized = _serialize_variable(variable.get(name))
-				if serialized != null:
-					object_data[name] = serialized
-			data["data"] = object_data
-		return data
-		return {
-			"type": "object",
-			"name" : variable.name.replace("@","")
-		}
+		TYPE_VECTOR2:
+			return _serialize_vector2(variable)
+		TYPE_VECTOR3:
+			return _serialize_vector3(variable)
+		TYPE_ARRAY:
+			return _serialize_array(variable)
+		TYPE_OBJECT:
+			return _serialize_object(variable)
 
 	return variable
 
@@ -240,21 +183,83 @@ func _deserialize_variable(input):
 	if typeof(input) != TYPE_DICTIONARY:
 		return input
 
-	if input.type == "vector2":
-		return Vector2(
-			input.x,
-			input.y
-		)
+	match input.type:
+		"vector2":
+			return _deserialize_vector2(input)
+		"vector3":
+			return _deserialize_vector3(input)
+		"array":
+			return _deserialize_array(input)
+		"object":
+			return _deserialize_object(input)
 
-	if input.type == "vector3":
-		return Vector3(
-			input.x,
-			input.y,
-			input.z
-		)
+	return null
 
-	if input.type == "array":
-		var array = []
-		for entry in input.data:
-			array.push_back(_deserialize_variable(entry))
-		return array
+######################################
+## data types serialization
+######################################
+
+func _serialize_vector2(input):
+	return {
+		"type": "vector2",
+		"x" : input.x,
+		"y" : input.y
+	}
+
+func _serialize_vector3(input):
+	return {
+		"type": "vector3",
+		"x" : input.x,
+		"y" : input.y,
+		"z" : input.z
+	}
+
+func _serialize_array(input):
+	var array = []
+	for entry in input:
+		array.push_back(_serialize_variable(entry))
+	return {
+		"type": "array",
+		"data": array
+	}
+
+func _serialize_object(input):
+	if not is_instance_valid(input):
+		return null
+	var object_variables = {}
+	if input.get("serializable"):
+		for variable in input.serializable:
+			var serialized = _serialize_variable(input.get(variable))
+			if serialized != null:
+				object_variables[variable] = serialized
+	return {
+		"type" : "object",
+		"filename": input.filename,
+		"position" : _serialize_variable(input.global_translation),
+		"scale" : _serialize_variable(input.scale),
+		"rotation": _serialize_variable(input.global_rotation),
+		"variables": object_variables
+	}
+
+######################################
+## data types deserialization
+######################################
+
+func _deserialize_vector2(input):
+	return Vector2(
+		input.x,
+		input.y
+	)
+
+func _deserialize_vector3(input):
+	return Vector3(
+		input.x,
+		input.y,
+		input.z
+	)
+
+func _deserialize_array(input):
+	var array = []
+	for entry in input.data:
+		array.push_back(_deserialize_variable(entry))
+	return array
