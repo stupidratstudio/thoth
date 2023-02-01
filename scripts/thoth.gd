@@ -1,4 +1,5 @@
 extends Node
+class_name Thoth
 
 var hasToLoadMap = false
 var loadMapName = ""
