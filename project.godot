@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "Node",
+"class": "Thoth",
+"language": "GDScript",
+"path": "res://scripts/thoth.gd"
+} ]
+_global_script_class_icons={
+"Thoth": ""
+}
+
 [application]
 
 config/name="Thoth"
@@ -18,6 +28,10 @@ config/icon="res://textures/icon.png"
 
 window/size/width=1920
 window/size/height=1080
+
+[editor_plugins]
+
+enabled=PoolStringArray( "res://addons/thoth/plugin.cfg" )
 
 [gui]
 
