@@ -13,9 +13,15 @@ _global_script_classes=[ {
 "class": "Thoth",
 "language": "GDScript",
 "path": "res://scripts/thoth.gd"
+}, {
+"base": "Node",
+"class": "ThothGameState",
+"language": "GDScript",
+"path": "res://addons/thoth/thoth_gamestate.gd"
 } ]
 _global_script_class_icons={
-"Thoth": ""
+"Thoth": "",
+"ThothGameState": ""
 }
 
 [application]

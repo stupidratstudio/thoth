@@ -2,7 +2,7 @@ tool
 extends EditorPlugin
 
 func _enter_tree():
-	pass
+	add_custom_type("Savegame", "Node", preload("thoth_gamestate.gd"), preload("icons/savegame.svg"))
 
 func _exit_tree():
 	pass
