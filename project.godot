@@ -18,10 +18,16 @@ _global_script_classes=[ {
 "class": "ThothGameState",
 "language": "GDScript",
 "path": "res://addons/thoth/thoth_gamestate.gd"
+}, {
+"base": "Node",
+"class": "ThothSerializer",
+"language": "GDScript",
+"path": "res://addons/thoth/thoth_serializer.gd"
 } ]
 _global_script_class_icons={
 "Thoth": "",
-"ThothGameState": ""
+"ThothGameState": "",
+"ThothSerializer": ""
 }
 
 [application]
