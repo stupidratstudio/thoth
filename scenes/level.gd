@@ -5,8 +5,14 @@ onready var obj1 = preload("res://objects/obj1.tscn")
 onready var obj2 = preload("res://objects/obj2.tscn")
 onready var obj3 = preload("res://objects/obj3.tscn")
 
+const serializable_collections = [
+	"objects"
+]
+
 func _ready():
 	randomize()
+	$Savegame.set_game_state(self)
+	$Savegame.save_game_state()
 
 func addNewObj(object, newPosition = null):
 	var o = object.instance()

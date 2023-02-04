@@ -1,5 +1,5 @@
+tool
 extends Node
-
 class_name ThothSerializer
 
 ######################################
@@ -78,6 +78,9 @@ static func _serialize_object(input):
 			var serialized = _serialize_variable(input.get(variable), true)
 			if serialized != null:
 				object_variables[variable] = serialized
+	else:
+		#object is not serializable
+		return null
 	return {
 		"type" : "object",
 		"name": input.name,
