@@ -2,6 +2,8 @@ tool
 extends Node
 class_name ThothSerializer
 
+const TAG_VARIABLES = "serializable"
+
 ######################################
 ## data serialization/deserialization
 ######################################
@@ -72,8 +74,8 @@ static func _serialize_object(input):
 	if not is_instance_valid(input):
 		return null
 	var object_variables = {}
-	if input.get("serializable"):
-		var variables = input.serializable
+	if input.get(TAG_VARIABLES) != null:
+		var variables = input.get(TAG_VARIABLES)
 		for variable in variables:
 			var serialized = _serialize_variable(input.get(variable), true)
 			if serialized != null:
@@ -85,8 +87,8 @@ static func _serialize_object(input):
 		"type" : "object",
 		"name": input.name,
 		"filename": input.filename,
-		"position" : _serialize_variable(input.global_translation),
-		"scale" : _serialize_variable(input.scale),
+		"position" : _serialize_variable(input.global_transform.origin),
+		"scale" : _serialize_variable(input.global_scale),
 		"rotation": _serialize_variable(input.global_rotation),
 		"variables": object_variables
 	}
@@ -123,11 +125,11 @@ static func _deserialize_array(input):
 static func _deserialize_object(input):
 	var object = load(input.filename).instance()
 	object.name = input.name
-	object.global_translation = _deserialize_variable(input.position)
-	object.scale = _deserialize_variable(input.scale)
+	object.global_transform.origin = _deserialize_variable(input.position)
+	object.global_scale = _deserialize_variable(input.scale)
 	object.global_rotation = _deserialize_variable(input.rotation)
-	if object.get("serializable"):
-		var variables = object.serializable
+	if object.get(TAG_VARIABLES) != null:
+		var variables = object.get(TAG_VARIABLES)
 		for variable_name in variables:
 			var variable_value = input.variables.get(variable_name)
 			if variable_value != null:
