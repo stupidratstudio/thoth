@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://objects/obj3.tscn" type="PackedScene" id=1]
 [ext_resource path="res://objects/obj2.tscn" type="PackedScene" id=2]
@@ -6,12 +6,16 @@
 [ext_resource path="res://objects/obj0.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/tileset.tres" type="TileSet" id=5]
 [ext_resource path="res://scenes/level.gd" type="Script" id=6]
+[ext_resource path="res://scenes/buttons.tscn" type="PackedScene" id=7]
+[ext_resource path="res://addons/thoth/thoth_gamestate.gd" type="Script" id=8]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 32.0
 
 [node name="level1" type="Node2D"]
 script = ExtResource( 6 )
+
+[node name="buttons" parent="." instance=ExtResource( 7 )]
 
 [node name="objects" type="Node2D" parent="."]
 
@@ -68,3 +72,10 @@ cell_size = Vector2( 16, 16 )
 cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
 format = 1
 tile_data = PoolIntArray( 131079, 0, 4, 131080, 0, 2, 131081, 0, 2, 131082, 0, 2, 131083, 0, 2, 131084, 0, 2, 131085, 0, 2, 131086, 0, 7, 196613, 0, 4, 196614, 0, 2, 196615, 0, 196615, 196622, 0, 196612, 196623, 0, 3, 262148, 0, 4, 262149, 0, 196615, 262152, 0, 65536, 262157, 0, 65536, 262160, 0, 65536, 327683, 0, 4, 327684, 0, 196615, 327687, 0, 1, 327688, 0, 327686, 327689, 0, 3, 327692, 0, 1, 327693, 0, 327686, 327694, 0, 3, 327696, 0, 196612, 327697, 0, 7, 393219, 0, 131072, 393224, 0, 196608, 393229, 0, 196608, 393233, 0, 131072, 458755, 0, 131072, 458769, 0, 131072, 524291, 0, 131072, 524305, 0, 131072, 589827, 0, 196612, 589828, 0, 7, 589841, 0, 131072, 655364, 0, 131072, 655367, 0, 65536, 655374, 0, 65536, 655377, 0, 131072, 720900, 0, 196612, 720901, 0, 7, 720903, 0, 196612, 720904, 0, 2, 720905, 0, 7, 720908, 0, 4, 720909, 0, 2, 720910, 0, 196615, 720912, 0, 4, 720913, 0, 196615, 786437, 0, 131072, 786441, 0, 196612, 786442, 0, 2, 786443, 0, 2, 786444, 0, 196615, 786448, 0, 196608, 851973, 0, 196612, 851974, 0, 2, 851975, 0, 7, 851983, 0, 65536, 917511, 0, 196612, 917512, 0, 2, 917513, 0, 7, 917516, 0, 4, 917517, 0, 2, 917518, 0, 2, 917519, 0, 196615, 983049, 0, 196612, 983050, 0, 2, 983051, 0, 2, 983052, 0, 196615 )
+
+[node name="Savegame" type="Node" parent="."]
+script = ExtResource( 8 )
+save_filename = "level1.sav"
+
+[connection signal="load_pressed" from="buttons" to="." method="_on_buttons_load_pressed"]
+[connection signal="save_pressed" from="buttons" to="." method="_on_buttons_save_pressed"]

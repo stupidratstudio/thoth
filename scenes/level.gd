@@ -34,3 +34,11 @@ func _unhandled_input(event):
 				addNewObj(obj3, $Area2D.position)
 	if event is InputEventMouseMotion:
 		$Area2D.position = event.position
+
+func _on_buttons_load_pressed():
+	$Savegame.load_game_state()
+	$Savegame.apply_game_state(self)
+
+func _on_buttons_save_pressed():
+	$Savegame.set_game_state(self)
+	$Savegame.save_game_state()
