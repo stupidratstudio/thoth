@@ -16,6 +16,12 @@ static func _serialize_variable(variable, object_convert_to_references = false):
 			return _serialize_vector2(variable)
 		TYPE_VECTOR3:
 			return _serialize_vector3(variable)
+		TYPE_BASIS:
+			return _serialize_basis(variable)
+		TYPE_TRANSFORM:
+			return _serialize_transform(variable)
+		TYPE_TRANSFORM2D:
+			return _serialize_transform2d(variable)
 		TYPE_ARRAY:
 			return _serialize_array(variable)
 		TYPE_OBJECT:
@@ -33,6 +39,12 @@ static func _deserialize_variable(input):
 			return _deserialize_vector2(input)
 		"vector3":
 			return _deserialize_vector3(input)
+		"basis":
+			return _deserialize_basis(input)
+		"transform":
+			return _deserialize_transform(input)
+		"transform2d":
+			return _deserialize_transform2d(input)
 		"array":
 			return _deserialize_array(input)
 		"object":
@@ -61,6 +73,28 @@ static func _serialize_vector3(input):
 		"z" : input.z
 	}
 
+static func _serialize_basis(input):
+	return {
+		"type": "basis",
+		"x": _serialize_variable(input.x),
+		"y": _serialize_variable(input.y),
+		"z": _serialize_variable(input.z)
+	}
+
+static func _serialize_transform(input):
+	return {
+		"type": "transform",
+		"basis": _serialize_variable(input.basis),
+		"origin": _serialize_variable(input.origin)
+	}
+
+static func _serialize_transform2d(input):
+	return {
+		"type": "transform",
+		"x": _serialize_variable(input.x),
+		"y": _serialize_variable(input.y),
+		"origin": _serialize_variable(input.origin)
+	}
 static func _serialize_array(input):
 	var array = []
 	for entry in input:
@@ -87,9 +121,7 @@ static func _serialize_object(input):
 		"type" : "object",
 		"name": input.name,
 		"filename": input.filename,
-		"position" : _serialize_variable(input.global_transform.origin),
-		"scale" : _serialize_variable(input.global_scale),
-		"rotation": _serialize_variable(input.global_rotation),
+		"transform" : _serialize_variable(input.global_transform),
 		"variables": object_variables
 	}
 
@@ -116,6 +148,26 @@ static func _deserialize_vector3(input):
 		input.z
 	)
 
+static func _deserialize_basis(input):
+	return Basis(
+		_deserialize_variable(input.x),
+		_deserialize_variable(input.y),
+		_deserialize_variable(input.z)
+	)
+
+static func _deserialize_transform(input):
+	return Transform(
+		_deserialize_variable(input.basis),
+		_deserialize_variable(input.origin)
+	)
+
+static func _deserialize_transform2d(input):
+	return Transform2D(
+		_deserialize_variable(input.x),
+		_deserialize_variable(input.y),
+		_deserialize_variable(input.origin)
+	)
+
 static func _deserialize_array(input):
 	var array = []
 	for entry in input.data:
@@ -125,9 +177,7 @@ static func _deserialize_array(input):
 static func _deserialize_object(input):
 	var object = load(input.filename).instance()
 	object.name = input.name
-	object.global_transform.origin = _deserialize_variable(input.position)
-	object.global_scale = _deserialize_variable(input.scale)
-	object.global_rotation = _deserialize_variable(input.rotation)
+	object.global_transform = _deserialize_variable(input.transform)
 	if object.get(TAG_VARIABLES) != null:
 		var variables = object.get(TAG_VARIABLES)
 		for variable_name in variables:

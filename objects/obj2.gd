@@ -6,6 +6,8 @@ var followLink = false
 var linkToObject = null
 onready var line = $Line2D
 
+const serializable = []
+
 func _ready():
 	pass
 

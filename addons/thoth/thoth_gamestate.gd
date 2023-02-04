@@ -27,4 +27,4 @@ func set_game_state(input_node):
 	game_state = ThothAssembler._serialize_node(input_node)
 
 func save_game_state():
-	print(game_state)
+	print(to_json(game_state))

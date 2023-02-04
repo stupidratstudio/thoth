@@ -2,6 +2,8 @@ extends Node2D
 
 var followCursor = false
 
+const serializable = []
+
 func _ready():
 	pass
 

@@ -7,6 +7,8 @@ var linksToObject = []
 var lines = []
 var nextEmptyLine = 0
 
+const serializable = []
+
 func _ready():
 	var linksNumber = randi()%5 + 1
 	for i in range(0, linksNumber):
