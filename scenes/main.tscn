@@ -11,7 +11,7 @@ script = ExtResource( 2 )
 
 [node name="Savegame" type="Node" parent="."]
 script = ExtResource( 1 )
-save_filename = "savegame.sav"
+save_filename = "levelX.sav"
 
 [node name="objects" type="Node2D" parent="."]
 

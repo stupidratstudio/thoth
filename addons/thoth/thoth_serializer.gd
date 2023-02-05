@@ -90,7 +90,7 @@ static func _serialize_transform(input):
 
 static func _serialize_transform2d(input):
 	return {
-		"type": "transform",
+		"type": "transform2d",
 		"x": _serialize_variable(input.x),
 		"y": _serialize_variable(input.y),
 		"origin": _serialize_variable(input.origin)

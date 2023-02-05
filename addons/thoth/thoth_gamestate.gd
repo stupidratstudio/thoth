@@ -6,7 +6,7 @@ var save_filename = "savegame.sav"
 var game_state = {}
 
 func _enter_tree():
-	print(ThothSerializer._serialize_variable(Vector2(1,2)))
+	pass
 
 func _exit_tree():
 	pass
@@ -29,9 +29,7 @@ func set_game_state(input_node):
 	game_state = ThothAssembler._serialize_node(input_node)
 
 func apply_game_state(input_node):
-	print("apply:")
-	print(game_state)
-	print()
+	ThothAssembler._deserialize_node(input_node, game_state)
 
 func load_game_state():
 	var file = File.new()
