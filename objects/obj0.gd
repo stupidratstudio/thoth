@@ -1,8 +1,11 @@
 extends Node2D
 
 var followCursor = false
+var color = Color(1,1,1) setget _set_color
 
-const serializable = []
+const serializable = [
+	"color"
+]
 
 func _ready():
 	pass
@@ -56,13 +59,9 @@ func findNewSpot():
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		if event.pressed and event.button_index == BUTTON_WHEEL_UP:
-			$Icon.modulate.r = 0
-			$Icon.modulate.g = 0
-			$Icon.modulate.b = 0
-			while $Icon.modulate.r == 0 and $Icon.modulate.g == 0 and $Icon.modulate.b == 0:
-				$Icon.modulate.r = (randi()%3)*0.5
-				$Icon.modulate.g = (randi()%3)*0.5
-				$Icon.modulate.b = (randi()%3)*0.5
+			self.color = Color(0,0,0)
+			while color.r == 0 and color.g == 0 and color.b == 0:
+				self.color = Color((randi()%3)*0.5,(randi()%3)*0.5,(randi()%3)*0.5)
 		if event.pressed and event.button_index == BUTTON_WHEEL_DOWN:
 			var newScale = randi()%4 + 1
 			scale = Vector2.ONE * newScale
@@ -70,3 +69,9 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 			queue_free()
 		if event.button_index == BUTTON_MIDDLE:
 			followCursor = event.pressed
+
+func _set_color(c):
+	color = c
+	$Icon.modulate.r = c.r
+	$Icon.modulate.g = c.g
+	$Icon.modulate.b = c.b

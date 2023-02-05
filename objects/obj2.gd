@@ -6,12 +6,15 @@ var followLink = false
 var linkToObject = null
 onready var line = $Line2D
 
-const serializable = []
-
-func _ready():
-	pass
+const serializable = [
+	"linkToObject"
+]
 
 func _process(_delta):
+	if linkToObject:
+		print(name + "->" + linkToObject.name + ", " + String(followLink))
+	else:
+		print("null, " + String(followLink))
 	if !is_instance_valid(linkToObject):
 		linkToObject = null
 	line.set_point_position(0, global_position-position)
@@ -32,7 +35,9 @@ func _unhandled_input(event):
 			followLink = false
 			if !followLink:
 				for area in $Area2DLink.get_overlapping_areas():
-					linkToObject = area.get_parent()
+					var targetObject = area.get_parent()
+					if self != targetObject:
+						linkToObject = targetObject
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:

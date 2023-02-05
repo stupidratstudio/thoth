@@ -3,6 +3,7 @@ extends Node
 class_name ThothSerializer
 
 const TAG_VARIABLES = "serializable"
+const TYPE_OBJECT_REFERENCE = "object_reference"
 
 ######################################
 ## data serialization/deserialization
@@ -16,6 +17,8 @@ static func _serialize_variable(variable, object_convert_to_references = false):
 			return _serialize_vector2(variable)
 		TYPE_VECTOR3:
 			return _serialize_vector3(variable)
+		TYPE_COLOR:
+			return _serialize_color(variable)
 		TYPE_BASIS:
 			return _serialize_basis(variable)
 		TYPE_TRANSFORM:
@@ -39,6 +42,8 @@ static func _deserialize_variable(input):
 			return _deserialize_vector2(input)
 		"vector3":
 			return _deserialize_vector3(input)
+		"color":
+			return _deserialize_color(input)
 		"basis":
 			return _deserialize_basis(input)
 		"transform":
@@ -49,7 +54,7 @@ static func _deserialize_variable(input):
 			return _deserialize_array(input)
 		"object":
 			return _deserialize_object(input)
-		"object_reference":
+		TYPE_OBJECT_REFERENCE:
 			return input
 
 	return null
@@ -71,6 +76,15 @@ static func _serialize_vector3(input):
 		"x" : input.x,
 		"y" : input.y,
 		"z" : input.z
+	}
+
+static func _serialize_color(input):
+	return {
+		"type": "color",
+		"r" : input.r,
+		"g" : input.g,
+		"b" : input.b,
+		"a" : input.a
 	}
 
 static func _serialize_basis(input):
@@ -127,7 +141,7 @@ static func _serialize_object(input):
 
 static func _serialize_object_reference(input):
 	return {
-		"type" : "object_reference",
+		"type" : TYPE_OBJECT_REFERENCE,
 		"name": input.name
 	}
 
@@ -146,6 +160,14 @@ static func _deserialize_vector3(input):
 		input.x,
 		input.y,
 		input.z
+	)
+
+static func _deserialize_color(input):
+	return Color(
+		input.r,
+		input.g,
+		input.b,
+		input.a
 	)
 
 static func _deserialize_basis(input):

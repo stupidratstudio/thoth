@@ -6,8 +6,11 @@ var followLink = false
 var linksToObject = []
 var lines = []
 var nextEmptyLine = 0
+var color = Color(1,1,1) setget _set_color
 
-const serializable = []
+const serializable = [
+	"color"
+]
 
 func _ready():
 	var linksNumber = randi()%5 + 1
@@ -16,7 +19,7 @@ func _ready():
 		line.width = 10
 		line.add_point(Vector2.ZERO)
 		line.add_point(Vector2.ZERO)
-		line.default_color = _get_color()
+		line.default_color = _get_line_color()
 		add_child(line)
 		lines.push_back(line)
 		linksToObject.push_back(null)
@@ -46,18 +49,16 @@ func _unhandled_input(event):
 			followLink = false
 			if !followLink:
 				for area in $Area2DLink.get_overlapping_areas():
-					linksToObject[nextEmptyLine] = area.get_parent()
+					var targetObject = area.get_parent()
+					if self != targetObject:
+						linksToObject[nextEmptyLine] = targetObject
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
 		if event.pressed and event.button_index == BUTTON_WHEEL_UP:
-			$Icon.modulate.r = 0
-			$Icon.modulate.g = 0
-			$Icon.modulate.b = 0
-			while $Icon.modulate.r == 0 and $Icon.modulate.g == 0 and $Icon.modulate.b == 0:
-				$Icon.modulate.r = (randi()%3)*0.5
-				$Icon.modulate.g = (randi()%3)*0.5
-				$Icon.modulate.b = (randi()%3)*0.5
+			self.color = Color(0,0,0)
+			while color.r == 0 and color.g == 0 and color.b == 0:
+				self.color = Color((randi()%3)*0.5,(randi()%3)*0.5,(randi()%3)*0.5)
 		if event.pressed and event.button_index == BUTTON_WHEEL_DOWN:
 			var newScale = randi()%4 + 1
 			scale = Vector2.ONE * newScale
@@ -74,7 +75,7 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 			if nextEmptyLine == -1:
 				nextEmptyLine = randi() % lines.size()
 
-func _get_color():
+func _get_line_color():
 	return Color(randi()%2, randi()%2, randi()%2)
 
 func _on_Area2D_area_entered(area):
@@ -115,3 +116,9 @@ func findNewSpot():
 	$Tween.stop(self, "position")
 	$Tween.interpolate_property(self, "position", position, newPos, 0.1*scale.x, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
 	$Tween.start()
+
+func _set_color(c):
+	color = c
+	$Icon.modulate.r = c.r
+	$Icon.modulate.g = c.g
+	$Icon.modulate.b = c.b

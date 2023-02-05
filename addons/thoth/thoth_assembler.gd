@@ -33,8 +33,22 @@ static func _deserialize_node(input_node, input_state):
 static func _deserialize_collection(input_collection, input_state):
 	#remove all children
 	for child in input_collection.get_children():
+		#do this to not mess up references later on
 		child.queue_free()
+		child.get_parent().remove_child(child)
 	for object_name in input_state:
 		var object_state = input_state[object_name]
 		var object = ThothSerializer._deserialize_object(object_state)
 		input_collection.add_child(object)
+	_reference_solve_collection(input_collection)
+
+static func _reference_solve_collection(input_collection):
+	for object in input_collection.get_children():
+		if object.get(ThothSerializer.TAG_VARIABLES) != null:
+			var variables = object.get(ThothSerializer.TAG_VARIABLES)
+			for variable_name in variables:
+				var variable_value = object.get(variable_name)
+				if typeof(variable_value) == TYPE_DICTIONARY:
+					if variable_value["type"] == ThothSerializer.TYPE_OBJECT_REFERENCE:
+						var target_object = input_collection.get_node(variable_value["name"])
+						object.set(variable_name, target_object)
