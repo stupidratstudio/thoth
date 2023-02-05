@@ -11,10 +11,6 @@ const serializable = [
 ]
 
 func _process(_delta):
-	if linkToObject:
-		print(name + "->" + linkToObject.name + ", " + String(followLink))
-	else:
-		print("null, " + String(followLink))
 	if !is_instance_valid(linkToObject):
 		linkToObject = null
 	line.set_point_position(0, global_position-position)

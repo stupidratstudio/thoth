@@ -9,7 +9,8 @@ var nextEmptyLine = 0
 var color = Color(1,1,1) setget _set_color
 
 const serializable = [
-	"color"
+	"color",
+	"linksToObject"
 ]
 
 func _ready():
