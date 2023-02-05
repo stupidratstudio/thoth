@@ -33,6 +33,8 @@ autostart = true
 
 [node name="Tween" type="Tween" parent="."]
 
+[node name="lines" type="Node2D" parent="."]
+
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

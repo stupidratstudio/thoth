@@ -34,6 +34,9 @@ static func _serialize_variable(variable, object_convert_to_references = false):
 	return variable
 
 static func _deserialize_variable(input):
+	if typeof(input) == TYPE_NIL:
+		return null
+
 	if typeof(input) != TYPE_DICTIONARY:
 		return input
 
@@ -109,10 +112,11 @@ static func _serialize_transform2d(input):
 		"y": _serialize_variable(input.y),
 		"origin": _serialize_variable(input.origin)
 	}
+
 static func _serialize_array(input):
 	var array = []
 	for entry in input:
-		array.push_back(_serialize_variable(entry))
+		array.push_back(_serialize_variable(entry, true))
 	return {
 		"type": "array",
 		"data": array
@@ -126,8 +130,7 @@ static func _serialize_object(input):
 		var variables = input.get(TAG_VARIABLES)
 		for variable in variables:
 			var serialized = _serialize_variable(input.get(variable), true)
-			if serialized != null:
-				object_variables[variable] = serialized
+			object_variables[variable] = serialized
 	else:
 		#object is not serializable
 		return null
@@ -204,6 +207,5 @@ static func _deserialize_object(input):
 		var variables = object.get(TAG_VARIABLES)
 		for variable_name in variables:
 			var variable_value = input.variables.get(variable_name)
-			if variable_value != null:
-				object.set(variable_name, _deserialize_variable(variable_value))
+			object.set(variable_name, _deserialize_variable(variable_value))
 	return object
