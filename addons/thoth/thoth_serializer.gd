@@ -136,7 +136,7 @@ static func _serialize_object(input):
 		return null
 	return {
 		"type" : "object",
-		"name": input.name,
+		"name": input.name.replace("@","_"),
 		"filename": input.filename,
 		"transform" : _serialize_variable(input.global_transform),
 		"variables": object_variables
@@ -145,7 +145,7 @@ static func _serialize_object(input):
 static func _serialize_object_reference(input):
 	return {
 		"type" : TYPE_OBJECT_REFERENCE,
-		"name": input.name
+		"name": input.name.replace("@","_")
 	}
 
 ######################################

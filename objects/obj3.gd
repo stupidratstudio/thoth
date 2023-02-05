@@ -14,7 +14,7 @@ const serializable = [
 
 func _ready():
 	if linksToObject.size() == 0:
-		var newLen = randi()%5 + 1
+		var newLen = 6# randi()%5 + 1
 		for i in range(0, newLen):
 			linksToObject.push_back(null)
 
