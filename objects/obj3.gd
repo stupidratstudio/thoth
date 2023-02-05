@@ -4,7 +4,6 @@ var followCursor = false
 var followLink = false
 
 var linksToObject = []
-var lines = []
 var nextEmptyLine = 0
 var color = Color(1,1,1) setget _set_color
 
@@ -14,19 +13,20 @@ const serializable = [
 ]
 
 func _ready():
-	_set_lines_number(randi()%5 + 1)
-	for i in range(0, lines.size()):
-		linksToObject.push_back(null)
+	if linksToObject.size() == 0:
+		var newLen = randi()%5 + 1
+		for i in range(0, newLen):
+			linksToObject.push_back(null)
 
 func _process(delta):
 	print(linksToObject)
 	for entry in range(0, linksToObject.size()):
 		if !is_instance_valid(linksToObject[entry]):
 			linksToObject[entry] = null
-	if linksToObject.size() != lines.size():
+	if linksToObject.size() != $lines.get_child_count():
 		_set_lines_number(linksToObject.size())
 	for entry in range(0, linksToObject.size()):
-		var line = lines[entry]
+		var line = $lines.get_child(entry)
 		var obj = linksToObject[entry]
 		line.set_point_position(0, global_position-position)
 		line.set_point_position(1, global_position-position)
@@ -38,7 +38,6 @@ func _process(delta):
 func _set_lines_number(number):
 	for line in $lines.get_children():
 		line.queue_free()
-	lines = []
 	for i in range(0, number):
 		var line = Line2D.new()
 		line.width = 10
@@ -46,7 +45,6 @@ func _set_lines_number(number):
 		line.add_point(Vector2.ZERO)
 		line.default_color = _get_line_color()
 		$lines.add_child(line)
-		lines.push_back(line)
 
 func _unhandled_input(event):
 	if event is InputEventMouseMotion:
@@ -83,7 +81,7 @@ func _on_Area2D_input_event(viewport, event, shape_idx):
 				if linksToObject[entry] == null:
 					nextEmptyLine = entry
 			if nextEmptyLine == -1:
-				nextEmptyLine = randi() % lines.size()
+				nextEmptyLine = randi() % $lines.get_child_count()
 
 func _get_line_color():
 	return Color(randi()%2, randi()%2, randi()%2)
