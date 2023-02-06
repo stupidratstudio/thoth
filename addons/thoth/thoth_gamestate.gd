@@ -4,6 +4,7 @@ class_name ThothGameState
 
 var save_filename = "savegame.sav"
 var game_state = {}
+var save_data = {}
 
 func _enter_tree():
 	pass
@@ -25,20 +26,35 @@ func _get_property_list():
 		}
 	]
 
-func set_game_state(input_node):
-	game_state = ThothAssembler._serialize_node(input_node)
+func save_exists():
+	var file = File.new()
+	return file.file_exists("user://" + save_filename)
 
-func apply_game_state(input_node):
-	ThothAssembler._deserialize_node(input_node, game_state)
+func pack_game_state(input_node):
+	game_state = ThothAssembler._serialize_level(input_node)
 
-func load_game_state():
+func unpack_game_state(input_node):
+	ThothAssembler._deserialize_level(input_node, game_state)
+
+func load_game_state(game_version = "default"):
+	_load_save_data()
+	game_state = save_data[game_version]
+
+func save_game_state(game_version = "default"):
+	if save_exists():
+		_load_save_data()
+
+	save_data[game_version] = game_state
+	_save_save_data()
+
+func _load_save_data():
 	var file = File.new()
 	file.open("user://" + save_filename, File.READ)
-	game_state = parse_json(file.get_line())
+	save_data = parse_json(file.get_line())
 	file.close()
 
-func save_game_state():
+func _save_save_data():
 	var file = File.new()
 	file.open("user://" + save_filename, File.WRITE)
-	file.store_line(to_json(game_state))
+	file.store_line(to_json(save_data))
 	file.close()

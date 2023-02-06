@@ -4,15 +4,35 @@ class_name ThothAssembler
 
 const TAG_COLLECTIONS = "serializable_collections"
 
-static func _serialize_node(input_node):
-	if input_node.get(TAG_COLLECTIONS) != null:
-		var node = {}
-		var collection_names = input_node.get(TAG_COLLECTIONS)
+#######################
+##level data handling
+#######################
+
+static func _serialize_level(level):
+	if level.get(TAG_COLLECTIONS) != null:
+		var level_variables = {}
+		if level.get(ThothSerializer.TAG_VARIABLES) != null:
+			ThothSerializer._serialize_object_variables(level)
+		var collections_data = {}
+		var collection_names = level.get(TAG_COLLECTIONS)
 		for collection_name in collection_names:
-			var collection_node = input_node.get_node(collection_name)
-			node[collection_name] = _serialize_collection(collection_node)
-		return node
+			var collection_node = level.get_node(collection_name)
+			collections_data[collection_name] = _serialize_collection(collection_node)
+		return {
+			"variables": level_variables,
+			"collections": collections_data
+		}
 	return {}
+
+static func _deserialize_level(level, input_state):
+	if level.get(ThothSerializer.TAG_VARIABLES) != null:
+		ThothSerializer._deserialize_object_variables(level, input_state.variables)
+	if level.get(TAG_COLLECTIONS) != null:
+		var collection_names = level.get(TAG_COLLECTIONS)
+		for collection_name in collection_names:
+			var collection_node = level.get_node(collection_name)
+			var input_state_collection = input_state.collections[collection_name]
+			_deserialize_collection(collection_node, input_state_collection)
 
 static func _serialize_collection(input_collection):
 	var collection = {}
@@ -21,14 +41,6 @@ static func _serialize_collection(input_collection):
 		if object != null:
 			collection[child.name] = object
 	return collection
-
-static func _deserialize_node(input_node, input_state):
-	if input_node.get(TAG_COLLECTIONS) != null:
-		var collection_names = input_node.get(TAG_COLLECTIONS)
-		for collection_name in collection_names:
-			var collection_node = input_node.get_node(collection_name)
-			var input_state_collection = input_state[collection_name]
-			_deserialize_collection(collection_node, input_state_collection)
 
 static func _deserialize_collection(input_collection, input_state):
 	#remove all children

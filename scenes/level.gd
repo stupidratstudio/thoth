@@ -35,8 +35,8 @@ func _unhandled_input(event):
 
 func _on_buttons_load_pressed():
 	$Savegame.load_game_state()
-	$Savegame.apply_game_state(self)
+	$Savegame.unpack_game_state(self)
 
 func _on_buttons_save_pressed():
-	$Savegame.set_game_state(self)
+	$Savegame.pack_game_state(self)
 	$Savegame.save_game_state()

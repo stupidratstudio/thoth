@@ -1,51 +1,47 @@
 {
-    "data":{
-    },
-    "versions":{
-        "$version_name":{
-            {
-                "data":{
-                },
-                "maps":{
-                    "$map_file_name.tscn": {
-                        "data":{
-                        },
-                        "collections":{
-                            "$group_name":{
-                                "$object_name":{
-                                    "type": "object",
-                                    "name": "$object_name",
-                                    "filename": "scene.tscn",
-                                    "position": {},
-                                    "scale": {},
-                                    "rotation": {},
-                                    "variables":{
-                                        "$pi": 3.1415926536,
-                                        "$vector2_name": {
-                                            "type": "vector2",
-                                            "x": 1,
-                                            "y": 1
-                                        },
-                                        "$vector3_name": {
-                                            "type": "vector3",
-                                            "x": 1,
-                                            "y": 1,
-                                            "z": 1
-                                        },
-                                        "$array_name": {
-                                            "type": "array",
-                                            "data": []
-                                        },
-                                        "$object_reference": {
-                                            "type": "object_reference",
-                                            "name": "$object_reference_name"
-                                        }
+    "$version_name":{
+        {
+            "variables":{
+            },
+            "maps":{
+                "$map_file_name.tscn": {
+                    "variables":{
+                    },
+                    "collections":{
+                        "$group_name":{
+                            "$object_name":{
+                                "type": "object",
+                                "name": "$object_name",
+                                "filename": "scene.tscn",
+                                "position": {},
+                                "scale": {},
+                                "rotation": {},
+                                "variables":{
+                                    "$pi": 3.1415926536,
+                                    "$vector2_name": {
+                                        "type": "vector2",
+                                        "x": 1,
+                                        "y": 1
+                                    },
+                                    "$vector3_name": {
+                                        "type": "vector3",
+                                        "x": 1,
+                                        "y": 1,
+                                        "z": 1
+                                    },
+                                    "$array_name": {
+                                        "type": "array",
+                                        "data": []
+                                    },
+                                    "$object_reference": {
+                                        "type": "object_reference",
+                                        "name": "$object_reference_name"
                                     }
                                 }
                             }
-                        },
-                        "objects":{
                         }
+                    },
+                    "objects":{
                     }
                 }
             }

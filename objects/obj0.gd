@@ -7,9 +7,6 @@ const serializable = [
 	"color"
 ]
 
-func _ready():
-	pass
-
 func _unhandled_input(event):
 	if followCursor:
 		if event is InputEventMouseMotion:
