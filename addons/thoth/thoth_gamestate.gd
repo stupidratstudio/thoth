@@ -3,7 +3,10 @@ extends Node
 class_name ThothGameState
 
 var save_filename = "savegame.sav"
-var game_state = {}
+var game_state = {
+	"variables": {},
+	"maps": {}
+}
 var save_data = {}
 
 func _enter_tree():
@@ -30,11 +33,12 @@ func save_exists():
 	var file = File.new()
 	return file.file_exists("user://" + save_filename)
 
-func pack_game_state(input_node):
-	game_state = ThothSerializer._serialize_level(input_node)
+func pack_game_state(level):
+	game_state.maps[level.filename] = ThothSerializer._serialize_level(level)
 
-func unpack_game_state(input_node):
-	ThothSerializer._deserialize_level(input_node, game_state)
+func unpack_game_state(level):
+	if game_state.maps.get(level.filename) != null:
+		ThothSerializer._deserialize_level(level, game_state.maps[level.filename])
 
 func load_game_state(game_version = "default"):
 	_load_save_data()

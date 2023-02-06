@@ -48,7 +48,7 @@ tile_data = PoolIntArray( 65540, 0, 65536, 65544, 0, 4, 65545, 0, 2, 65546, 0, 3
 
 [node name="Savegame" type="Node" parent="."]
 script = ExtResource( 7 )
-save_filename = "level0.sav"
+save_filename = "savegame.sav"
 
 [connection signal="load_pressed" from="buttons" to="." method="_on_buttons_load_pressed"]
 [connection signal="save_pressed" from="buttons" to="." method="_on_buttons_save_pressed"]
