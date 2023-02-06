@@ -19,7 +19,6 @@ func _ready():
 			linksToObject.push_back(null)
 
 func _process(delta):
-	print(linksToObject)
 	for entry in range(0, linksToObject.size()):
 		if !is_instance_valid(linksToObject[entry]):
 			linksToObject[entry] = null
