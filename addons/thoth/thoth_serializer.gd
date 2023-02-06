@@ -164,15 +164,18 @@ static func _serialize_collection(input_collection):
 	return collection
 
 static func _serialize_level(level):
+	var serialized_level = {}
+	var level_variables = null
+	var collections_data = null
+	if level.get(TAG_VARIABLES) != null:
+		level_variables = _serialize_object_variables(level)
 	if level.get(TAG_COLLECTIONS) != null:
-		var level_variables = {}
-		if level.get(TAG_VARIABLES) != null:
-			_serialize_object_variables(level)
-		var collections_data = {}
+		collections_data = {}
 		var collection_names = level.get(TAG_COLLECTIONS)
 		for collection_name in collection_names:
 			var collection_node = level.get_node(collection_name)
 			collections_data[collection_name] = _serialize_collection(collection_node)
+	if level_variables != null or collections_data != null:
 		return {
 			"variables": level_variables,
 			"collections": collections_data

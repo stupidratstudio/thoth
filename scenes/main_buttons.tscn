@@ -21,6 +21,13 @@ margin_right = 320.0
 margin_bottom = 320.0
 text = "New level 1"
 
+[node name="new_level2" type="Button" parent="."]
+margin_left = 128.0
+margin_top = 384.0
+margin_right = 320.0
+margin_bottom = 448.0
+text = "New level 2"
+
 [node name="load_level0" type="Button" parent="."]
 margin_left = 448.0
 margin_top = 128.0
@@ -35,7 +42,16 @@ margin_right = 640.0
 margin_bottom = 320.0
 text = "Load level 1"
 
+[node name="load_level2" type="Button" parent="."]
+margin_left = 448.0
+margin_top = 384.0
+margin_right = 640.0
+margin_bottom = 448.0
+text = "Load level 2"
+
 [connection signal="pressed" from="new_level0" to="." method="_on_new_level0_pressed"]
 [connection signal="pressed" from="new_level1" to="." method="_on_new_level1_pressed"]
+[connection signal="pressed" from="new_level2" to="." method="_on_new_level2_pressed"]
 [connection signal="pressed" from="load_level0" to="." method="_on_load_level0_pressed"]
 [connection signal="pressed" from="load_level1" to="." method="_on_load_level1_pressed"]
+[connection signal="pressed" from="load_level2" to="." method="_on_load_level2_pressed"]
