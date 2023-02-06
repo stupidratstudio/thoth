@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Godot Save/Load Game State</title>
+</head>
+<body>
+  <h1>Godot Save/Load Game State</h1>
+
+  <h2>visited_level(level)</h2>
+  <p>This function returns a boolean indicating whether a level with the given filename has been visited in the current game state. It does this by checking if the level's filename is present in the maps property of the game_state object.</p>
+  <p><strong>Input:</strong> level - the level object to check if it has been visited</p>
+  <p><strong>Output:</strong> A boolean indicating whether the level has been visited</p>
+
+  <h2>clear_level_history(level)</h2>
+  <p>This function removes the given level from the current game state. It does this by erasing the level's filename from the maps property of the game_state object.</p>
+  <p><strong>Input:</strong> level - the level object to clear from the game state</p>
+  <p><strong>Output:</strong> None</p>
+
+  <h2>save_exists()</h2>
+  <p>This function returns a boolean indicating whether a save file exists for the current game. It does this by creating a new File object and checking if the file exists at the specified save file path.</p>
+  <p><strong>Input:</strong> None</p>
+  <p><strong>Output:</strong> A boolean indicating whether a save file exists</p>
+
+  <h2>pack_game_state(level)</h2>
+  <p>This function adds the given level to the current game state. It does this by serializing the level using the ThothSerializer._serialize_level() method and adding the serialized data to the maps property of the game_state object with the level's filename as the key.</p>
+  <p><strong>Input:</strong> level - the level object to add to the game state</p>
+  <p><strong>Output:</strong> None</p>
+
+  <h2>unpack_game_state(level)</h2>
+  <p>This function restores the state of the given level from the current game state. It does this by checking if the level's filename is present in the maps property of the game_state object. If it is present, the level is deserialized using the ThothSerializer._deserialize_level() method and the deserialized data.</p>
+  <p><strong>Input:</strong> level - the level object to restore the state for</p>
+  <p><strong>Output:</strong> None</p>
+
+  <h2>set_game_variables(node)</h2>
+  <p>This function saves the variables of the given node to the current game state. It does this by serializing the node's variables using the ThothSerializer._serialize_object_variables() method and storing the serialized data in the variables property of the game_state object.</p>
+  <p><strong>Input:</strong> node - the node whose variables to save to the game state</p>
+  <p><strong>Output:</strong> None</p>
+
+  <h2>get_game_variables(node)</h2>
+  <p>This function restores the variables of the given node from the current game state. It does this by deserializing the node's variables using the ThothSerializer._deserialize_object_variables() method and the data stored in the variables property of the game_state object.</p>
+  <p><strong>Input:</strong> node - the node whose variables to restore from the game state</p>
+  <p><strong>Output:</strong> None</p>
+
+  <h2>load_game_state(game_version = "default")</h2>
+  <p>This function loads the game state from a save file. It first checks if a save file exists using the save_exists() function. If a save file exists, it loads the save data using the _load_save_data() method and sets the game_state object to the data for the specified game version. The default game version is "default".</p>
+  <p><strong>Input:</strong> game_version - the version of the game state to load (optional, default value is "default")</p>
+  <p><strong>Output:</strong> None</p>
+
+  <h2>save_game_state(game_version = "default")</h2>
+  <p>This function saves the current game state to a save file. It first checks if a save file exists using the save_exists() function. If a save file exists, it loads the existing save data using the _load_save_data() method. Then, it sets the data for the specified game version to the current game_state object and saves the updated save data using the _save_save_data() method. The default game version is "default".</p>
+  <p><strong>Input:</strong> game_version - the version of the game state to save (optional, default value is "default")</p>
+  <p><strong>Output:</strong> None</p>
+  <p>Note: The _load_save_data() and _save_save_data() methods are assumed to exist and handle loading and saving the save file respectively.</p>
+</body>
+</html>
