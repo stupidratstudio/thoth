@@ -7,6 +7,12 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
 
+[node name="back" type="Button" parent="."]
+margin_top = 64.0
+margin_right = 256.0
+margin_bottom = 128.0
+text = "Main menu"
+
 [node name="load" type="Button" parent="."]
 margin_right = 128.0
 margin_bottom = 64.0
@@ -18,5 +24,6 @@ margin_right = 256.0
 margin_bottom = 64.0
 text = "Save"
 
+[connection signal="pressed" from="back" to="." method="_on_back_pressed"]
 [connection signal="pressed" from="load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="save" to="." method="_on_save_pressed"]

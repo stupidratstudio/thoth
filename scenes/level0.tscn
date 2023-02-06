@@ -20,16 +20,16 @@ script = ExtResource( 5 )
 [node name="objects" type="Node2D" parent="."]
 
 [node name="obj0" parent="objects" instance=ExtResource( 4 )]
-position = Vector2( 64, 128 )
+position = Vector2( 64, 192 )
 
 [node name="obj1" parent="objects" instance=ExtResource( 3 )]
-position = Vector2( 192, 128 )
+position = Vector2( 192, 192 )
 
 [node name="obj2" parent="objects" instance=ExtResource( 2 )]
-position = Vector2( 64, 256 )
+position = Vector2( 64, 320 )
 
 [node name="obj3" parent="objects" instance=ExtResource( 1 )]
-position = Vector2( 192, 256 )
+position = Vector2( 192, 320 )
 
 [node name="Area2D" type="Area2D" parent="."]
 monitorable = false
