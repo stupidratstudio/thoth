@@ -1,48 +1,99 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Godot Save/Load Game State</title>
+  <style>
+    body {
+      text-align: center;
+      overflow: auto;
+      background-color: #286b40;
+    }
+
+    .scroll-region {
+      display: inline-block;
+      width: 70%;
+      max-width: 1000px;
+      padding: 50px 20px 100px 20px;
+      text-align: left;
+      background-color: #a3cfb3;
+    }
+
+    hr {
+        height: 3px;
+        border: 0;
+        background-color: #286b40;
+    }
+
+    h1 {
+      font-family: Helvetica;
+      font-size: 30px;
+    }
+
+    h2 {
+      font-family: Helvetica;
+      font-size: 22px;
+    }
+
+    p {
+      font-family: Helvetica;
+      font-size: 16px;
+    }
+  </style>
+
+  <head>
+      <title>Godot Save/Load Game State</title>
+  </head>
 </head>
 <body>
-  <h1>Godot Save/Load Game State</h1>
+  <div class="scroll-region">
+    <h1 style="font-size:55px;text-align:center;">Godot Save/Load Game State</h1>
 
-  <h1>Functions</h1>
+    <h1>Method descriptions</h1>
+    <hr>
 
-  <h2>visited_level(level)</h2>
-  <p>Returns a boolean indicating whether a level has been visited.</p>
-  <p><strong>Input:</strong> level - the level object to check</p>
-  <p><strong>Output:</strong> Boolean</p>
+    <h2>visited_level(level)</h2>
+    <p>Returns a boolean indicating whether a level has been visited.</p>
+    <p><strong>Input:</strong> level - the level object to check</p>
+    <p><strong>Output:</strong> Boolean</p>
+    <hr>
 
-  <h2>clear_level_history(level_filename)</h2>
-  <p>Removes the given level history from the current game state.</p>
-  <p><strong>Input:</strong> String - the level filename</p>
+    <h2>clear_level_history(level_filename)</h2>
+    <p>Removes the given level history from the current game state.</p>
+    <p><strong>Input:</strong> String - the level filename</p>
+    <hr>
 
-  <h2>save_exists()</h2>
-  <p>Returns a boolean indicating whether a save file exists.</p>
-  <p><strong>Output:</strong> A boolean indicating whether the save file exists</p>
+    <h2>save_exists()</h2>
+    <p>Returns a boolean indicating whether a save file exists.</p>
+    <p><strong>Output:</strong> A boolean indicating whether the save file exists</p>
+    <hr>
 
-  <h2>pack_game_state(level)</h2>
-  <p>Adds the given level to the current game state. It does this by serializing the level, adding all the variables registered in "serializable" and/or collections registered in "serializable_collections".</p>
-  <p><strong>Input:</strong> level - the level object to add to the game state</p>
+    <h2>pack_game_state(level)</h2>
+    <p>Adds the given level to the current game state. It does this by serializing the level, adding all the variables registered in "serializable" and/or collections registered in "serializable_collections".</p>
+    <p><strong>Input:</strong> level - the level object to add to the game state</p>
+    <hr>
 
-  <h2>unpack_game_state(level)</h2>
-  <p>Restores the state of the given level from the current game state. The variables in this object will be overwritten and collections will be repopulated.</p>
-  <p><strong>Input:</strong> level - the level object to restore the state for</p>
+    <h2>unpack_game_state(level)</h2>
+    <p>Restores the state of the given level from the current game state. The variables in this object will be overwritten and collections will be repopulated.</p>
+    <p><strong>Input:</strong> level - the level object to restore the state for</p>
+    <hr>
 
-  <h2>set_game_variables(node)</h2>
-  <p>Adds variables of the given node to the current game state.</p>
-  <p><strong>Input:</strong> node - the node whose variables to save to the game state</p>
+    <h2>set_game_variables(node)</h2>
+    <p>Adds variables of the given node to the current game state.</p>
+    <p><strong>Input:</strong> node - the node whose variables to save to the game state</p>
+    <hr>
 
-  <h2>get_game_variables(node)</h2>
-  <p>Restores the variables of the given node from the current game state.</p>
-  <p><strong>Input:</strong> node - the node whose variables to restore from the game state</p>
+    <h2>get_game_variables(node)</h2>
+    <p>Restores the variables of the given node from the current game state.</p>
+    <p><strong>Input:</strong> node - the node whose variables to restore from the game state</p>
+    <hr>
 
-  <h2>load_game_state(game_version = "default")</h2>
-  <p>Loads the game state from a save file. This will overwrite the current game state, this means that any packing done before calling this function will be lost, packing should be done after a load to append new map data to a save. Optionally a version of the game can be provided, by default the game version is "default". This is useful if the object format has changed for the game and not compatible with older versions</p>
-  <p><strong>Input:</strong> game_version - the version of the game state to load (optional, default value is "default")</p>
+    <h2>load_game_state(game_version = "default")</h2>
+    <p>Loads the game state from a save file. This will overwrite the current game state, this means that any packing done before calling this function will be lost, packing should be done after a load to append new map data to a save. Optionally a version of the game can be provided, by default the game version is "default". This is useful if the object format has changed for the game and not compatible with older versions</p>
+    <p><strong>Input:</strong> game_version - the version of the game state to load (optional, default value is "default")</p>
+    <hr>
 
-  <h2>save_game_state(game_version = "default")</h2>
-  <p>Saves the current game state to a save file.</p>
-  <p><strong>Input:</strong> game_version - the version of the game state to save (optional, default value is "default")</p>
+    <h2>save_game_state(game_version = "default")</h2>
+    <p>Saves the current game state to a save file.</p>
+    <p><strong>Input:</strong> game_version - the version of the game state to save (optional, default value is "default")</p>
+  </div>
 </body>
 </html>
