@@ -29,6 +29,9 @@ func _get_property_list():
 		}
 	]
 
+func visited_level(level):
+	return game_state.maps.has(level.filename)
+
 func save_exists():
 	var file = File.new()
 	return file.file_exists("user://" + save_filename)
