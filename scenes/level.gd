@@ -34,10 +34,10 @@ func _unhandled_input(event):
 		$Area2D.position = event.position
 
 func _on_buttons_load_pressed():
-	$Savegame.load_game_state()
-	$Savegame.unpack_game_state(self)
+	$Savestate.load_game_state()
+	$Savestate.unpack_game_state(self)
 
 func _on_buttons_save_pressed():
-	$Savegame.load_game_state()
-	$Savegame.pack_game_state(self)
-	$Savegame.save_game_state()
+	$Savestate.load_game_state()
+	$Savestate.pack_game_state(self)
+	$Savestate.save_game_state()

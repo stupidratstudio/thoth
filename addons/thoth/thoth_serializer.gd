@@ -127,11 +127,9 @@ static func _serialize_array(input):
 static func _serialize_object(input):
 	if not is_instance_valid(input):
 		return null
-	var object_variables = {}
-	if input.get(TAG_VARIABLES) != null:
-		object_variables = _serialize_object_variables(input)
-	else:
-		#object is not serializable
+	var object_variables = _serialize_object_variables(input)
+	#object is not serializable
+	if object_variables == null:
 		return null
 	return {
 		"type" : "object",
@@ -142,12 +140,14 @@ static func _serialize_object(input):
 	}
 
 static func _serialize_object_variables(object):
-	var object_variables = {}
-	var variables = object.get(TAG_VARIABLES)
-	for variable in variables:
-		var serialized = _serialize_variable(object.get(variable), true)
-		object_variables[variable] = serialized
-	return object_variables
+	if object.get(TAG_VARIABLES) != null:
+		var object_variables = {}
+		var variables = object.get(TAG_VARIABLES)
+		for variable in variables:
+			var serialized = _serialize_variable(object.get(variable), true)
+			object_variables[variable] = serialized
+		return object_variables
+	return null
 
 static func _serialize_object_reference(input):
 	return {
@@ -167,8 +167,7 @@ static func _serialize_level(level):
 	var serialized_level = {}
 	var level_variables = null
 	var collections_data = null
-	if level.get(TAG_VARIABLES) != null:
-		level_variables = _serialize_object_variables(level)
+	level_variables = _serialize_object_variables(level)
 	if level.get(TAG_COLLECTIONS) != null:
 		collections_data = {}
 		var collection_names = level.get(TAG_COLLECTIONS)
@@ -237,15 +236,15 @@ static func _deserialize_object(input):
 	var object = load(input.filename).instance()
 	object.name = input.name
 	object.global_transform = _deserialize_variable(input.transform)
-	if object.get(TAG_VARIABLES) != null:
-		_deserialize_object_variables(object, input.variables)
+	_deserialize_object_variables(object, input.variables)
 	return object
 
 static func _deserialize_object_variables(object, input_data):
-	var variables = object.get(TAG_VARIABLES)
-	for variable_name in variables:
-		var variable_value = input_data[variable_name]
-		object.set(variable_name, _deserialize_variable(variable_value))
+	if object.get(TAG_VARIABLES) != null:
+		var variables = object.get(TAG_VARIABLES)
+		for variable_name in variables:
+			var variable_value = input_data[variable_name]
+			object.set(variable_name, _deserialize_variable(variable_value))
 
 static func _deserialize_collection(input_collection, input_state):
 	#remove all children
@@ -260,8 +259,7 @@ static func _deserialize_collection(input_collection, input_state):
 	_reference_solve_collection(input_collection)
 
 static func _deserialize_level(level, input_state):
-	if level.get(TAG_VARIABLES) != null:
-		_deserialize_object_variables(level, input_state.variables)
+	_deserialize_object_variables(level, input_state.variables)
 	if level.get(TAG_COLLECTIONS) != null:
 		var collection_names = level.get(TAG_COLLECTIONS)
 		for collection_name in collection_names:

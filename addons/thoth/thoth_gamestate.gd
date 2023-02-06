@@ -18,7 +18,7 @@ func _exit_tree():
 func _get_property_list():
 	return [
 		{
-			"name": "Savegame",
+			"name": "Savestate",
 			"type": TYPE_STRING,
 			"usage": PROPERTY_USAGE_CATEGORY
 		},
@@ -46,9 +46,16 @@ func unpack_game_state(level):
 	if game_state.maps.get(level.filename) != null:
 		ThothSerializer._deserialize_level(level, game_state.maps[level.filename])
 
+func set_game_variables(node):
+	game_state.variables = ThothSerializer._serialize_object_variables(node)
+
+func get_game_variables(node):
+	ThothSerializer._deserialize_object_variables(node, game_state.variables)
+
 func load_game_state(game_version = "default"):
-	_load_save_data()
-	game_state = save_data[game_version]
+	if save_exists():
+		_load_save_data()
+		game_state = save_data[game_version]
 
 func save_game_state(game_version = "default"):
 	if save_exists():
