@@ -15,11 +15,6 @@ _global_script_classes=[ {
 "path": "res://scripts/thoth.gd"
 }, {
 "base": "Node",
-"class": "ThothAssembler",
-"language": "GDScript",
-"path": "res://addons/thoth/thoth_assembler.gd"
-}, {
-"base": "Node",
 "class": "ThothGameState",
 "language": "GDScript",
 "path": "res://addons/thoth/thoth_gamestate.gd"
@@ -31,7 +26,6 @@ _global_script_classes=[ {
 } ]
 _global_script_class_icons={
 "Thoth": "",
-"ThothAssembler": "",
 "ThothGameState": "",
 "ThothSerializer": ""
 }

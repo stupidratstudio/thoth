@@ -31,10 +31,10 @@ func save_exists():
 	return file.file_exists("user://" + save_filename)
 
 func pack_game_state(input_node):
-	game_state = ThothAssembler._serialize_level(input_node)
+	game_state = ThothSerializer._serialize_level(input_node)
 
 func unpack_game_state(input_node):
-	ThothAssembler._deserialize_level(input_node, game_state)
+	ThothSerializer._deserialize_level(input_node, game_state)
 
 func load_game_state(game_version = "default"):
 	_load_save_data()

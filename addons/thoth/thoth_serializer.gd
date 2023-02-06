@@ -3,6 +3,8 @@ extends Node
 class_name ThothSerializer
 
 const TAG_VARIABLES = "serializable"
+const TAG_COLLECTIONS = "serializable_collections"
+
 const TYPE_OBJECT_REFERENCE = "object_reference"
 
 ######################################
@@ -153,6 +155,30 @@ static func _serialize_object_reference(input):
 		"name": input.name.replace("@","_")
 	}
 
+static func _serialize_collection(input_collection):
+	var collection = {}
+	for child in input_collection.get_children():
+		var object = _serialize_object(child)
+		if object != null:
+			collection[child.name] = object
+	return collection
+
+static func _serialize_level(level):
+	if level.get(TAG_COLLECTIONS) != null:
+		var level_variables = {}
+		if level.get(TAG_VARIABLES) != null:
+			_serialize_object_variables(level)
+		var collections_data = {}
+		var collection_names = level.get(TAG_COLLECTIONS)
+		for collection_name in collection_names:
+			var collection_node = level.get_node(collection_name)
+			collections_data[collection_name] = _serialize_collection(collection_node)
+		return {
+			"variables": level_variables,
+			"collections": collections_data
+		}
+	return {}
+
 ######################################
 ## data types deserialization
 ######################################
@@ -217,3 +243,79 @@ static func _deserialize_object_variables(object, input_data):
 	for variable_name in variables:
 		var variable_value = input_data[variable_name]
 		object.set(variable_name, _deserialize_variable(variable_value))
+
+static func _deserialize_collection(input_collection, input_state):
+	#remove all children
+	for child in input_collection.get_children():
+		#do this to not mess up references later on
+		child.queue_free()
+		child.get_parent().remove_child(child)
+	for object_name in input_state:
+		var object_state = input_state[object_name]
+		var object = _deserialize_object(object_state)
+		input_collection.add_child(object)
+	_reference_solve_collection(input_collection)
+
+static func _deserialize_level(level, input_state):
+	if level.get(TAG_VARIABLES) != null:
+		_deserialize_object_variables(level, input_state.variables)
+	if level.get(TAG_COLLECTIONS) != null:
+		var collection_names = level.get(TAG_COLLECTIONS)
+		for collection_name in collection_names:
+			var collection_node = level.get_node(collection_name)
+			var input_state_collection = input_state.collections[collection_name]
+			_deserialize_collection(collection_node, input_state_collection)
+
+###############################
+##solve references
+###############################
+
+static func _reference_solve_collection(input_collection):
+	for object in input_collection.get_children():
+		if object.get(TAG_VARIABLES) != null:
+			if _object_has_references(object):
+				_object_solve_references(object, input_collection)
+
+static func _object_solve_references(object, collection):
+	var variables = object.get(TAG_VARIABLES)
+	for variable_name in variables:
+		var variable_value = object.get(variable_name)
+		if _variable_is_reference(variable_value):
+			var solved_variable = _variable_solve_reference(variable_value, collection)
+			object.set(variable_name, solved_variable)
+
+static func _variable_solve_reference(variable_value, collection):
+	if typeof(variable_value) == TYPE_DICTIONARY:
+		var solved_variable = collection.get_node(variable_value.name)
+		return solved_variable
+	if typeof(variable_value) == TYPE_ARRAY:
+		var array = []
+		for entry in variable_value:
+			if _variable_is_reference(entry):
+				var solved_variable = _variable_solve_reference(entry, collection)
+				array.push_back(solved_variable)
+			else:
+				array.push_back(entry)
+		return array
+	return null
+
+########################################
+##test if contains or is reference
+########################################
+
+static func _object_has_references(object):
+	var variables = object.get(TAG_VARIABLES)
+	for variable_name in variables:
+		var variable_value = object.get(variable_name)
+		if _variable_is_reference(variable_value):
+			return true
+	return false
+
+static func _variable_is_reference(input_variable):
+	if typeof(input_variable) == TYPE_DICTIONARY:
+		return input_variable.type == TYPE_OBJECT_REFERENCE
+	if typeof(input_variable) == TYPE_ARRAY:
+		for value in input_variable:
+			if _variable_is_reference(value):
+				return true
+	return false
