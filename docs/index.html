@@ -39,6 +39,10 @@
         background: none;
     }
 
+    .with-indent {
+        text-indent: 5%;
+    }
+
     hr {
         height: 3px;
         border: 0;
@@ -47,6 +51,7 @@
 
     h1 {
       font-size: 30px;
+      padding-top: 70px;
     }
 
     h2 {
@@ -66,10 +71,17 @@
     <hr>
 
     <h1 id="explained">Explanation</h1>
+    <p class="with-indent">Any save game system works by taking all of the information stored by the game objects, packs them in such a way that they can be saved to the disk and afterwards it can be retrieved from the disk and repopulate that information back into the game objects or levels.</p>
+    <p class="with-indent">This system is designed in such a way so any kind of game would be able to use it. This is done by enforcing a small amount of constraints on how the levels and the objects should be stored on the disk.</p>
+    <p class="with-indent">The plugin introduces a new Godot game object called a Savestate, which is also tied to a filename and is able to store the game state at any given point in time. You can add variables to this save state, or you can add levels. If you have multiple levels in your game, it can also save separate entries for each of the levels. The constraint done on the levels is that all levels should contain collections, and the collections are the actual Node that contains the game objects. For example a level could have a collection of bullets and the collection of enemies and maybe the save game wouldn't save the bullets, but it is important that all game objects are children to one of these Node object.  The node object we are talking about is either a Node, Spatial or Node2d,  depending on the use case and how the game objects are being used, but it's very important to be grouped as such.</p>
+    <p class="with-indent">Marking an object to be saved to the disk is done by simply declaring which variables need to be saved. This is done by creating a <u>"serializable"</u> variable and add inside of it the names of the variables that need to be saved into the save file. In the same manner the levels will have a <u>"serializable_collections"</u> is variable that needs to be populated with the names of the collections.</p>
+    <p class="with-indent">After the Savestate object has been informed on which variables and objects needs to be saved, by just calling a simple function, detailed below, that state is saved to the disk and later on it can be loaded, all that information ready to be repopulated in the original objects.</p>
+    <p class="with-indent">Because the system is also capable of handling variables which are not tied to levels or objects,  means that the system can also be used to save the configuration of the game itself. As previously mentioned the only thing that needs to be done is to mark the relevant variables and pack them to the Savestate.</p>
     <hr>
 
     <h1 id="tutorial">Tutorial</h1>
     <p>Spoj de ureche!</p>
+    <p class="with-indent">This tutorial is not supposed to explain the more complicated cases where the game would have multiple maps, open world or other special settings. The tutorial is destined to explain the most basic use case, which means saving variables and saving object states.</p>
     <pre><code class="language-gdscript">func _on_config_load_pressed():
 	$ConfigState.load_game_state()
 	$ConfigState.get_game_variables(self)
@@ -83,8 +95,7 @@ func _on_config_save_pressed():
 	c = $c.value
 	$ConfigState.load_game_state()
 	$ConfigState.set_game_variables(self)
-	$ConfigState.save_game_state()
-</code></pre>
+	$ConfigState.save_game_state()</code></pre>
 
     <hr>
 
@@ -137,7 +148,57 @@ func _on_config_save_pressed():
     <p><strong>Input:</strong> game_version - the version of the game state to save (optional, default value is "default")</p>
 
     <h1 id="format">File format</h1>
-    <p>The code provided saves and loads game state data in a specific format defined in a JSON-like file.The game state data is stored in a dictionary-like structure with the top level key being a version name string "$version_name". Each version name points to a dictionary containing two keys, "variables" and "maps".The "variables" key holds information about game-wide variables and their values.The "maps" key is also a dictionary that holds information about saved map state data. Each key within the "maps" dictionary is a string representing the file name of the map in the format of "$map_file_name.tscn". The value of each key is another dictionary that holds information about the saved state of the map.This map dictionary has two keys, "collections" and "objects". The "collections" key holds information about the state of various object collections in the map. The "objects" key holds information about individual objects within the map.Each object in the "collections" or "objects" keys is represented by a dictionary with several keys. The "type" key is a string indicating the type of object being saved. The "name" key holds the name of the object as a string. The "filename" key holds the file name of the object as a string. The "position", "scale", and "rotation" keys hold information about the object's position, scale, and rotation respectively. The "variables" key holds a dictionary of object-specific variables and their values.Each variable within the "variables" key of an object is also represented by a dictionary with a "type" key indicating the type of the variable and other keys holding the value of the variable. The supported types of variables include "object_reference", "vector2", "vector3", "array", and "object".</p>
+    <pre><code id="savestate-schema" class="language-json">{
+    "$version_name":{
+        {
+            "variables":{
+            },
+            "maps":{
+                "$map_file_name.tscn": {
+                    "variables":{
+                    },
+                    "collections":{
+                        "$group_name":{
+                            "$object_name":{
+                                "type": "object",
+                                "name": "$object_name",
+                                "filename": "scene.tscn",
+                                "position": {},
+                                "scale": {},
+                                "rotation": {},
+                                "variables":{
+                                    "$pi": 3.1415926536,
+                                    "$vector2_name": {
+                                        "type": "vector2",
+                                        "x": 1,
+                                        "y": 1
+                                    },
+                                    "$vector3_name": {
+                                        "type": "vector3",
+                                        "x": 1,
+                                        "y": 1,
+                                        "z": 1
+                                    },
+                                    "$array_name": {
+                                        "type": "array",
+                                        "data": []
+                                    },
+                                    "$object_reference": {
+                                        "type": "object_reference",
+                                        "name": "$object_reference_name"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "objects":{
+                    }
+                }
+            }
+        }
+    }
+}</code></pre>
+    <p class="with-indent">The code provided saves and loads game state data in a specific format defined in a JSON-like file.The game state data is stored in a dictionary-like structure with the top level key being a version name string "$version_name". Each version name points to a dictionary containing two keys, "variables" and "maps".The "variables" key holds information about game-wide variables and their values.The "maps" key is also a dictionary that holds information about saved map state data. Each key within the "maps" dictionary is a string representing the file name of the map in the format of "$map_file_name.tscn". The value of each key is another dictionary that holds information about the saved state of the map.This map dictionary has two keys, "collections" and "objects". The "collections" key holds information about the state of various object collections in the map. The "objects" key holds information about individual objects within the map.Each object in the "collections" or "objects" keys is represented by a dictionary with several keys. The "type" key is a string indicating the type of object being saved. The "name" key holds the name of the object as a string. The "filename" key holds the file name of the object as a string. The "position", "scale", and "rotation" keys hold information about the object's position, scale, and rotation respectively. The "variables" key holds a dictionary of object-specific variables and their values.Each variable within the "variables" key of an object is also represented by a dictionary with a "type" key indicating the type of the variable and other keys holding the value of the variable. The supported types of variables include "object_reference", "vector2", "vector3", "array", and "object".</p>
     <hr>
   </div>
 </body>
