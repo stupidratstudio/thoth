@@ -13,9 +13,7 @@
                                 "type": "object",
                                 "name": "$object_name",
                                 "filename": "scene.tscn",
-                                "position": {},
-                                "scale": {},
-                                "rotation": {},
+                                "transform": {},
                                 "variables":{
                                     "$pi": 3.1415926536,
                                     "$vector2_name": {
