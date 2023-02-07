@@ -1,11 +1,18 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>Godot Save/Load Game State</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.20.0/themes/prism.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.20.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.20.0/components/prism-gdscript.min.js"></script>
   <style>
     body {
       text-align: center;
       overflow: auto;
       background-color: #286b40;
+      font-family: Helvetica;
+      font-size: 16px;
+      line-height: 25px;
     }
 
     .scroll-region {
@@ -17,6 +24,21 @@
       background-color: #a3cfb3;
     }
 
+    pre[class*="language-"]{
+    }
+
+    pre[class*="language-"],
+    code[class*="language-"]{
+        background-color: #071f0f;
+        text-shadow: none;
+        color: #a3cfb3;
+        margin: 0;
+    }
+
+    .token.operator {
+        background: none;
+    }
+
     hr {
         height: 3px;
         border: 0;
@@ -24,30 +46,49 @@
     }
 
     h1 {
-      font-family: Helvetica;
       font-size: 30px;
     }
 
     h2 {
-      font-family: Helvetica;
       font-size: 22px;
     }
-
-    p {
-      font-family: Helvetica;
-      font-size: 16px;
-    }
   </style>
-
-  <head>
-      <title>Godot Save/Load Game State</title>
-  </head>
 </head>
 <body>
   <div class="scroll-region">
     <h1 style="font-size:55px;text-align:center;">Godot Save/Load Game State</h1>
 
-    <h1>Method descriptions</h1>
+    <h1>Index</h1>
+    <a href="#explained"><h2>Explanation</h2></a>
+    <a href="#tutorial"><h2>Tutorial</h2></a>
+    <a href="#methods"><h2>Method descriptions</h2></a>
+    <a href="#format"><h2>File format</h2></a>
+    <hr>
+
+    <h1 id="explained">Explanation</h1>
+    <hr>
+
+    <h1 id="tutorial">Tutorial</h1>
+    <p>Spoj de ureche!</p>
+    <pre><code class="language-gdscript">func _on_config_load_pressed():
+	$ConfigState.load_game_state()
+	$ConfigState.get_game_variables(self)
+	$a.value = a
+	$b.value = b
+	$c.value = c
+
+func _on_config_save_pressed():
+	a = $a.value
+	b = $b.value
+	c = $c.value
+	$ConfigState.load_game_state()
+	$ConfigState.set_game_variables(self)
+	$ConfigState.save_game_state()
+</code></pre>
+
+    <hr>
+
+    <h1 id="methods">Method descriptions</h1>
     <hr>
 
     <h2>visited_level(level)</h2>
@@ -94,6 +135,10 @@
     <h2>save_game_state(game_version = "default")</h2>
     <p>Saves the current game state to a save file.</p>
     <p><strong>Input:</strong> game_version - the version of the game state to save (optional, default value is "default")</p>
+
+    <h1 id="format">File format</h1>
+    <p>The code provided saves and loads game state data in a specific format defined in a JSON-like file.The game state data is stored in a dictionary-like structure with the top level key being a version name string "$version_name". Each version name points to a dictionary containing two keys, "variables" and "maps".The "variables" key holds information about game-wide variables and their values.The "maps" key is also a dictionary that holds information about saved map state data. Each key within the "maps" dictionary is a string representing the file name of the map in the format of "$map_file_name.tscn". The value of each key is another dictionary that holds information about the saved state of the map.This map dictionary has two keys, "collections" and "objects". The "collections" key holds information about the state of various object collections in the map. The "objects" key holds information about individual objects within the map.Each object in the "collections" or "objects" keys is represented by a dictionary with several keys. The "type" key is a string indicating the type of object being saved. The "name" key holds the name of the object as a string. The "filename" key holds the file name of the object as a string. The "position", "scale", and "rotation" keys hold information about the object's position, scale, and rotation respectively. The "variables" key holds a dictionary of object-specific variables and their values.Each variable within the "variables" key of an object is also represented by a dictionary with a "type" key indicating the type of the variable and other keys holding the value of the variable. The supported types of variables include "object_reference", "vector2", "vector3", "array", and "object".</p>
+    <hr>
   </div>
 </body>
 </html>
