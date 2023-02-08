@@ -43,7 +43,7 @@ func pack_game_state(level):
 	game_state.maps[level.filename] = ThothSerializer._serialize_level(level)
 
 func unpack_game_state(level):
-	if game_state.maps.get(level.filename) != null:
+	if visited_level(level):
 		ThothSerializer._deserialize_level(level, game_state.maps[level.filename])
 
 func set_game_variables(node):
