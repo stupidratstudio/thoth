@@ -1,0 +1,84 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://test/textures/ibis2.png" type="Texture" id=2]
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends Node2D
+
+var followCursor = false
+var followLink = false
+
+var linkToObject = null
+onready var line = $Line2D
+
+const serializable = [
+	\"linkToObject\"
+]
+
+func _process(_delta):
+	if !is_instance_valid(linkToObject):
+		linkToObject = null
+	line.set_point_position(0, global_position-position)
+	line.set_point_position(1, global_position-position)
+	if linkToObject != null:
+		line.set_point_position(1, linkToObject.global_position-position)
+	if followLink:
+		line.set_point_position(1, $Area2DLink.global_position-position)
+
+func _unhandled_input(event):
+	if event is InputEventMouseMotion:
+		if followLink:
+			$Area2DLink.global_position = event.position
+		if followCursor:
+			position = event.position
+	if event is InputEventMouseButton:
+		if !event.pressed and event.button_index == BUTTON_LEFT:
+			followLink = false
+			if !followLink:
+				for area in $Area2DLink.get_overlapping_areas():
+					var targetObject = area.get_parent()
+					if self != targetObject:
+						linkToObject = targetObject
+
+func _on_Area2D_input_event(viewport, event, shape_idx):
+	if event is InputEventMouseButton:
+		if event.pressed and event.button_index == BUTTON_WHEEL_UP:
+			rotation_degrees += 45/4.0
+		if event.pressed and event.button_index == BUTTON_WHEEL_DOWN:
+			rotation_degrees -= 45/4.0
+		if event.button_index == BUTTON_RIGHT:
+			queue_free()
+		if event.button_index == BUTTON_MIDDLE:
+			followCursor = event.pressed
+		if event.pressed and event.button_index == BUTTON_LEFT:
+			followLink = true
+"
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 32.0
+
+[sub_resource type="CircleShape2D" id=2]
+
+[node name="obj2" type="Node2D"]
+script = SubResource( 3 )
+
+[node name="Icon" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="Area2D" type="Area2D" parent="."]
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 1 )
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PoolVector2Array( 0, 0, 0, 0 )
+default_color = Color( 1, 1, 1, 1 )
+
+[node name="Area2DLink" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2DLink"]
+shape = SubResource( 2 )
+
+[connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]

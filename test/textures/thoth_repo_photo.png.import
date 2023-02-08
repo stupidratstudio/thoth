@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ibis0.png-47e8e5a96153e63224e2b3b4e695991a.stex"
+path="res://.import/thoth_repo_photo.png-e0c371598e6417504e06da4a7701ff4b.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://textures/ibis0.png"
-dest_files=[ "res://.import/ibis0.png-47e8e5a96153e63224e2b3b4e695991a.stex" ]
+source_file="res://test/textures/thoth_repo_photo.png"
+dest_files=[ "res://.import/thoth_repo_photo.png-e0c371598e6417504e06da4a7701ff4b.stex" ]
 
 [params]
 
@@ -20,7 +20,7 @@ compress/hdr_mode=0
 compress/bptc_ldr=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -31,5 +31,5 @@ process/invert_color=false
 process/normal_map_invert_y=false
 stream=false
 size_limit=0
-detect_3d=false
+detect_3d=true
 svg/scale=1.0

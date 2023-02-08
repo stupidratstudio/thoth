@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://scenes/level2.gd" type="Script" id=1]
-[ext_resource path="res://scenes/Counter.tscn" type="PackedScene" id=2]
-[ext_resource path="res://scenes/tileset.tres" type="TileSet" id=5]
-[ext_resource path="res://scenes/buttons.tscn" type="PackedScene" id=7]
+[ext_resource path="res://test/scenes/level2.gd" type="Script" id=1]
+[ext_resource path="res://test/scenes/Counter.tscn" type="PackedScene" id=2]
+[ext_resource path="res://test/scenes/tileset.tres" type="TileSet" id=5]
+[ext_resource path="res://test/scenes/buttons.tscn" type="PackedScene" id=7]
 [ext_resource path="res://addons/thoth/thoth_gamestate.gd" type="Script" id=8]
 
 [node name="level2" type="Node2D"]
