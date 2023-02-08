@@ -43,6 +43,15 @@
         text-indent: 5%;
     }
 
+    .center-img {
+        text-align: center;
+    }
+
+    .underline-godot {
+        font-weight: bold;
+        color: #440044;
+    }
+
     hr {
         height: 3px;
         border: 0;
@@ -74,28 +83,44 @@
     <p class="with-indent">Any save game system works by taking all of the information stored by the game objects, packs them in such a way that they can be saved to the disk and afterwards it can be retrieved from the disk and repopulate that information back into the game objects or levels.</p>
     <p class="with-indent">This system is designed in such a way so any kind of game would be able to use it. This is done by enforcing a small amount of constraints on how the levels and the objects should be stored on the disk.</p>
     <p class="with-indent">The plugin introduces a new Godot game object called a Savestate, which is also tied to a filename and is able to store the game state at any given point in time. You can add variables to this save state, or you can add levels. If you have multiple levels in your game, it can also save separate entries for each of the levels. The constraint done on the levels is that all levels should contain collections, and the collections are the actual Node that contains the game objects. For example a level could have a collection of bullets and the collection of enemies and maybe the save game wouldn't save the bullets, but it is important that all game objects are children to one of these Node object.  The node object we are talking about is either a Node, Spatial or Node2d,  depending on the use case and how the game objects are being used, but it's very important to be grouped as such.</p>
-    <p class="with-indent">Marking an object to be saved to the disk is done by simply declaring which variables need to be saved. This is done by creating a <u>"serializable"</u> variable and add inside of it the names of the variables that need to be saved into the save file. In the same manner the levels will have a <u>"serializable_collections"</u> is variable that needs to be populated with the names of the collections.</p>
+    <p class="with-indent">Marking an object to be saved to the disk is done by simply declaring which variables need to be saved. This is done by creating a <u class="underline-godot">serializable</u> variable and add inside of it the names of the variables that need to be saved into the save file. In the same manner the levels will have a <u class="underline-godot">serializable_collections</u> is variable that needs to be populated with the names of the collections.</p>
     <p class="with-indent">After the Savestate object has been informed on which variables and objects needs to be saved, by just calling a simple function, detailed below, that state is saved to the disk and later on it can be loaded, all that information ready to be repopulated in the original objects.</p>
     <p class="with-indent">Because the system is also capable of handling variables which are not tied to levels or objects,  means that the system can also be used to save the configuration of the game itself. As previously mentioned the only thing that needs to be done is to mark the relevant variables and pack them to the Savestate.</p>
     <hr>
 
     <h1 id="tutorial">Tutorial</h1>
-    <p>Spoj de ureche!</p>
     <p class="with-indent">This tutorial is not supposed to explain the more complicated cases where the game would have multiple maps, open world or other special settings. The tutorial is destined to explain the most basic use case, which means saving variables and saving object states.</p>
-    <pre><code class="language-gdscript">func _on_config_load_pressed():
-	$ConfigState.load_game_state()
-	$ConfigState.get_game_variables(self)
-	$a.value = a
-	$b.value = b
-	$c.value = c
+    <p class="with-indent">First of all we will need to have a scene for the level itself, that has buttons meant to be clicked in order to load & save. This level scene will contain one collection (which is a Node2D in this example) that will contain the objects that we want to save.</p>
+    <p class="center-img"><img src="level0.png"></img></p>
+    <p class="with-indent">The <u class="underline-godot">buttons</u> node contains buttons that when clicked will trigger the load & save functions. Node name <u class="underline-godot">objects</u> contains the objects that will get serialized and saved in the file. Any changes to these will be saved.</p>
+    <p class="with-indent">Node called <u class="underline-godot">Savestate</u> is the one which is responsible for loading and saving the data. For this to work, we first need to input the filename of the save first by completing the field in the Inspector.<br>(This can also be done programatically by changing the variable <u class="underline-godot">save_filename</u> of the Savestate node)</p>
 
-func _on_config_save_pressed():
-	a = $a.value
-	b = $b.value
-	c = $c.value
-	$ConfigState.load_game_state()
-	$ConfigState.set_game_variables(self)
-	$ConfigState.save_game_state()</code></pre>
+    <p class="center-img"><img src="savestate.png"></img></p>
+    <p class="with-indent">Here is the code that will handle the events from the load & save buttons:</p>
+    <pre><code class="language-gdscript">extends Node2D
+
+# declare that all game objects from the collection called objects should be saved
+const serializable_collections = [
+	"objects"
+]
+
+# when the load button is pressed
+func _on_buttons_load_pressed():
+    # first load the state of the game from the disk
+	$Savestate.load_game_state()
+    # unpack that state loaded into this scene
+    # this will remove all the objects from the node objects
+    # and will populate it with the objects as written in the file on disk
+	$Savestate.unpack_game_state(self)
+
+func _on_buttons_save_pressed():
+    # first you need to load the state on the disk
+    # this is needed because there might be information about other game states
+	$Savestate.load_game_state()
+    # this appends the current level node's data to the game state
+	$Savestate.pack_game_state(self)
+    # finally it is saved to the disk
+	$Savestate.save_game_state()</code></pre>
 
     <hr>
 
@@ -119,7 +144,7 @@ func _on_config_save_pressed():
     <hr>
 
     <h2>pack_game_state(level)</h2>
-    <p>Adds the given level to the current game state. It does this by serializing the level, adding all the variables registered in "serializable" and/or collections registered in "serializable_collections".</p>
+    <p>Adds the given level to the current game state. It does this by serializing the level, adding all the variables registered in <u class="underline-godot">serializable</u> and/or collections registered in <u class="underline-godot">serializable_collections</u>.</p>
     <p><strong>Input:</strong> level - the level object to add to the game state</p>
     <hr>
 
