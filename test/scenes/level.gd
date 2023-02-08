@@ -1,9 +1,9 @@
 extends Node2D
 
-onready var obj0 = preload("res://objects/obj0.tscn")
-onready var obj1 = preload("res://objects/obj1.tscn")
-onready var obj2 = preload("res://objects/obj2.tscn")
-onready var obj3 = preload("res://objects/obj3.tscn")
+onready var obj0 = preload("res://test/objects/obj0.tscn")
+onready var obj1 = preload("res://test/objects/obj1.tscn")
+onready var obj2 = preload("res://test/objects/obj2.tscn")
+onready var obj3 = preload("res://test/objects/obj3.tscn")
 
 const serializable_collections = [
 	"objects"
