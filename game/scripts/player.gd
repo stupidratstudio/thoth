@@ -10,6 +10,7 @@ func _ready():
 	pass # Replace with function body.
 
 func _process(delta):
+	_setCoins()
 	walkDirection = Vector2.ZERO
 	if Input.is_action_pressed("move_up"):
 		walkDirection+=Vector2(0,-1)
@@ -36,3 +37,6 @@ func _process(delta):
 
 func _physics_process(delta):
 	self.move_and_slide(walkDirection * speed)
+
+func _setCoins():
+	get_parent().get_parent().get_node("coin_display").set_coin(coin)

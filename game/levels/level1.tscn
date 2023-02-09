@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://game/scenes/tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://game/objects/gate_to_level0.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://game/scenes/buttons.tscn" type="PackedScene" id=4]
 [ext_resource path="res://game/objects/ghost.tscn" type="PackedScene" id=5]
 [ext_resource path="res://game/scripts/level1.gd" type="Script" id=6]
+[ext_resource path="res://game/scenes/coin_display.tscn" type="PackedScene" id=7]
 
 [node name="level1" type="Node2D"]
 script = ExtResource( 6 )
@@ -64,3 +65,6 @@ position = Vector2( 1520, 768 )
 position = Vector2( 752, 560 )
 
 [node name="buttons" parent="." instance=ExtResource( 4 )]
+
+[node name="coin_display" parent="." instance=ExtResource( 7 )]
+position = Vector2( 0, 64 )
