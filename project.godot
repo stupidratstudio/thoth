@@ -33,7 +33,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Thoth"
-run/main_scene="res://game/scenes/level0.tscn"
+run/main_scene="res://game/levels/level0.tscn"
 config/icon="res://test/textures/icon.png"
 
 [autoload]

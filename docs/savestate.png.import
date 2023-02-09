@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/savestate.PNG-d08150a1ee54b193a400606b50427122.stex"
+path="res://.import/savestate.png-288a4bb2bd1b99bfac6502a9bfc83bee.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://docs/savestate.PNG"
-dest_files=[ "res://.import/savestate.PNG-d08150a1ee54b193a400606b50427122.stex" ]
+source_file="res://docs/savestate.png"
+dest_files=[ "res://.import/savestate.png-288a4bb2bd1b99bfac6502a9bfc83bee.stex" ]
 
 [params]
 

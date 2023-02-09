@@ -4,7 +4,7 @@
 [ext_resource path="res://game/scenes/tileset.tres" type="TileSet" id=2]
 [ext_resource path="res://game/objects/gate_to_level1.tscn" type="PackedScene" id=3]
 [ext_resource path="res://game/objects/coin.tscn" type="PackedScene" id=4]
-[ext_resource path="res://game/scenes/level0.gd" type="Script" id=5]
+[ext_resource path="res://game/scripts/level0.gd" type="Script" id=5]
 [ext_resource path="res://game/scenes/buttons.tscn" type="PackedScene" id=6]
 
 [node name="level0" type="Node2D"]
@@ -43,31 +43,24 @@ tile_data = PoolIntArray( -1, 2, 0, -65536, 2, 1, -65535, 2, 1, -65534, 2, 1, -6
 
 [node name="coin" parent="objects" instance=ExtResource( 4 )]
 position = Vector2( 1620, 575 )
-scale = Vector2( 1, 1 )
 
 [node name="coin2" parent="objects" instance=ExtResource( 4 )]
 position = Vector2( 1230, 897 )
-scale = Vector2( 1, 1 )
 
 [node name="coin3" parent="objects" instance=ExtResource( 4 )]
 position = Vector2( 694, 856 )
-scale = Vector2( 1, 1 )
 
 [node name="coin4" parent="objects" instance=ExtResource( 4 )]
 position = Vector2( 427, 703 )
-scale = Vector2( 1, 1 )
 
 [node name="coin5" parent="objects" instance=ExtResource( 4 )]
 position = Vector2( 957, 558 )
-scale = Vector2( 1, 1 )
 
 [node name="coin6" parent="objects" instance=ExtResource( 4 )]
 position = Vector2( 626, 383 )
-scale = Vector2( 1, 1 )
 
 [node name="coin7" parent="objects" instance=ExtResource( 4 )]
 position = Vector2( 1281, 362 )
-scale = Vector2( 1, 1 )
 
 [node name="player" parent="objects" instance=ExtResource( 1 )]
 position = Vector2( 128, 256 )
