@@ -2,5 +2,5 @@ extends Node2D
 
 func _on_Area2D_body_entered(body):
 	if body.is_in_group("player"):
-		get_tree().change_scene("res://game/scenes/level1.tscn")
+		get_tree().change_scene("res://game/levels/level1.tscn")
 		PlayerState.last_visited_level = "level0"

@@ -11,9 +11,6 @@
 [node name="level1" type="Node2D"]
 script = ExtResource( 6 )
 
-[node name="gate" parent="." instance=ExtResource( 2 )]
-position = Vector2( 1518, 1206 )
-
 [node name="layers" type="Node2D" parent="."]
 scale = Vector2( 5, 5 )
 
@@ -34,6 +31,9 @@ cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
 collision_layer = 3
 collision_mask = 3
 format = 1
+
+[node name="gate" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1518, 1206 )
 
 [node name="objects" type="Node2D" parent="."]
 
