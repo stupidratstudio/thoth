@@ -38,7 +38,7 @@ config/icon="res://test/textures/icon.png"
 
 [autoload]
 
-PlayerState="*res://game/scripts/player_state.gd"
+PlayerState="*res://game/objects/player_state.tscn"
 
 [display]
 

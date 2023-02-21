@@ -1,7 +1,5 @@
 extends KinematicBody2D
 
-var coin = 0
-
 var walkDirection = Vector2.ZERO
 var lastWalkDirection = Vector2.ZERO
 var speed = 300
@@ -39,4 +37,4 @@ func _physics_process(delta):
 	self.move_and_slide(walkDirection * speed)
 
 func _setCoins():
-	get_parent().get_parent().get_node("coin_display").set_coin(coin)
+	get_parent().get_parent().get_node("coin_display").set_coin(PlayerState.collected_coins)

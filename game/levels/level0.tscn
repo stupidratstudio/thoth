@@ -70,3 +70,6 @@ position = Vector2( 128, 256 )
 
 [node name="coin_display" parent="." instance=ExtResource( 7 )]
 position = Vector2( 0, 64 )
+
+[connection signal="load_pressed" from="buttons" to="." method="_on_buttons_load_pressed"]
+[connection signal="save_pressed" from="buttons" to="." method="_on_buttons_save_pressed"]
