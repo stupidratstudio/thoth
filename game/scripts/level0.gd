@@ -6,8 +6,10 @@ func _ready():
 
 
 func _on_buttons_load_pressed():
-	pass # Replace with function body.
+	$Savestate.load_game_state()
+	$Savestate.get_game_variables(PlayerState)
 
 
 func _on_buttons_save_pressed():
-	pass # Replace with function body.
+	$Savestate.set_game_variables(PlayerState)
+	$Savestate.save_game_state()
