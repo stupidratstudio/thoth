@@ -30,6 +30,8 @@ func _get_property_list():
 	]
 
 func visited_level(level):
+	if typeof(level) == TYPE_STRING:
+		return game_state.maps.has(level)
 	return game_state.maps.has(level.filename)
 
 func clear_level_history(level_filename):

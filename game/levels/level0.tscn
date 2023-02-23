@@ -38,7 +38,7 @@ tile_data = PoolIntArray( -1, 2, 0, -65536, 2, 1, -65535, 2, 1, -65534, 2, 1, -6
 position = Vector2( 1440, -32 )
 
 [node name="gate_from_level1" type="Node2D" parent="."]
-position = Vector2( 1438, 84 )
+position = Vector2( 1438, 95 )
 scale = Vector2( 5, 5 )
 
 [node name="objects" type="Node2D" parent="."]
