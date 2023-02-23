@@ -1,5 +1,7 @@
 extends KinematicBody2D
 
+var serializable = []
+
 var walkDirection = Vector2.ZERO
 var lastWalkDirection = Vector2.ZERO
 var speed = 300

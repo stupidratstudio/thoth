@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://game/scenes/tileset.tres" type="TileSet" id=1]
 [ext_resource path="res://game/objects/gate_to_level0.tscn" type="PackedScene" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://game/objects/ghost.tscn" type="PackedScene" id=5]
 [ext_resource path="res://game/scripts/level1.gd" type="Script" id=6]
 [ext_resource path="res://game/scenes/coin_display.tscn" type="PackedScene" id=7]
+[ext_resource path="res://addons/thoth/thoth_gamestate.gd" type="Script" id=8]
 
 [node name="level1" type="Node2D"]
 script = ExtResource( 6 )
@@ -68,3 +69,10 @@ position = Vector2( 752, 560 )
 
 [node name="coin_display" parent="." instance=ExtResource( 7 )]
 position = Vector2( 0, 64 )
+
+[node name="Savestate" type="Node" parent="."]
+script = ExtResource( 8 )
+save_filename = "savegame.sav"
+
+[connection signal="load_pressed" from="buttons" to="." method="_on_buttons_load_pressed"]
+[connection signal="save_pressed" from="buttons" to="." method="_on_buttons_save_pressed"]
