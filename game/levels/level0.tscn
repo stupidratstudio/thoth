@@ -68,8 +68,10 @@ position = Vector2( 1281, 362 )
 position = Vector2( 128, 256 )
 
 [node name="buttons" parent="." instance=ExtResource( 6 )]
+visible = false
 
 [node name="coin_display" parent="." instance=ExtResource( 7 )]
+visible = false
 position = Vector2( 0, 64 )
 
 [node name="Savestate" type="Node" parent="."]
