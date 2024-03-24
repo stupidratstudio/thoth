@@ -22,28 +22,28 @@ script = ExtResource( 8 )
 save_filename = "savegame.sav"
 
 [node name="a" parent="." instance=ExtResource( 2 )]
-margin_left = 192.0
-margin_top = 192.0
-margin_right = 192.0
-margin_bottom = 192.0
+offset_left = 192.0
+offset_top = 192.0
+offset_right = 192.0
+offset_bottom = 192.0
 
 [node name="b" parent="." instance=ExtResource( 2 )]
-margin_left = 704.0
-margin_top = 192.0
-margin_right = 704.0
-margin_bottom = 192.0
+offset_left = 704.0
+offset_top = 192.0
+offset_right = 704.0
+offset_bottom = 192.0
 
 [node name="c" parent="." instance=ExtResource( 2 )]
-margin_left = 192.0
-margin_top = 448.0
-margin_right = 192.0
-margin_bottom = 448.0
+offset_left = 192.0
+offset_top = 448.0
+offset_right = 192.0
+offset_bottom = 448.0
 
 [node name="d" parent="." instance=ExtResource( 2 )]
-margin_left = 704.0
-margin_top = 448.0
-margin_right = 704.0
-margin_bottom = 448.0
+offset_left = 704.0
+offset_top = 448.0
+offset_right = 704.0
+offset_bottom = 448.0
 
 [node name="buttons" parent="." instance=ExtResource( 7 )]
 

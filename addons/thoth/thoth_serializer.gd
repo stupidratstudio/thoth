@@ -1,4 +1,4 @@
-tool
+@tool
 extends Node
 class_name ThothSerializer
 
@@ -23,7 +23,7 @@ static func _serialize_variable(variable, object_convert_to_references = false):
 			return _serialize_color(variable)
 		TYPE_BASIS:
 			return _serialize_basis(variable)
-		TYPE_TRANSFORM:
+		TYPE_TRANSFORM3D:
 			return _serialize_transform(variable)
 		TYPE_TRANSFORM2D:
 			return _serialize_transform2d(variable)
@@ -214,7 +214,7 @@ static func _deserialize_basis(input):
 	)
 
 static func _deserialize_transform(input):
-	return Transform(
+	return Transform3D(
 		_deserialize_variable(input.basis),
 		_deserialize_variable(input.origin)
 	)
@@ -233,7 +233,7 @@ static func _deserialize_array(input):
 	return array
 
 static func _deserialize_object(input):
-	var object = load(input.filename).instance()
+	var object = load(input.filename).instantiate()
 	object.name = input.name
 	object.global_transform = _deserialize_variable(input.transform)
 	_deserialize_object_variables(object, input.variables)

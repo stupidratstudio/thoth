@@ -1,4 +1,4 @@
-tool
+@tool
 extends Node
 class_name ThothGameState
 
@@ -69,11 +69,13 @@ func save_game_state(game_version = "default"):
 func _load_save_data():
 	var file = File.new()
 	file.open("user://" + save_filename, File.READ)
-	save_data = parse_json(file.get_line())
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(file.get_line())
+	save_data = test_json_conv.get_data()
 	file.close()
 
 func _save_save_data():
 	var file = File.new()
 	file.open("user://" + save_filename, File.WRITE)
-	file.store_line(to_json(save_data))
+	file.store_line(JSON.new().stringify(save_data))
 	file.close()

@@ -5,7 +5,7 @@ var followLink = false
 
 var linksToObject = []
 var nextEmptyLine = 0
-var color = Color(1,1,1) setget _set_color
+var color = Color(1,1,1): set = _set_color
 
 const serializable = [
 	"color",
@@ -52,7 +52,7 @@ func _unhandled_input(event):
 		if followCursor:
 			position = event.position
 	if event is InputEventMouseButton:
-		if !event.pressed and event.button_index == BUTTON_LEFT:
+		if !event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 			followLink = false
 			if !followLink:
 				for area in $Area2DLink.get_overlapping_areas():
@@ -62,18 +62,18 @@ func _unhandled_input(event):
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
-		if event.pressed and event.button_index == BUTTON_WHEEL_UP:
+		if event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_UP:
 			self.color = Color(0,0,0)
 			while color.r == 0 and color.g == 0 and color.b == 0:
 				self.color = Color((randi()%3)*0.5,(randi()%3)*0.5,(randi()%3)*0.5)
-		if event.pressed and event.button_index == BUTTON_WHEEL_DOWN:
+		if event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
 			var newScale = randi()%4 + 1
 			scale = Vector2.ONE * newScale
-		if event.button_index == BUTTON_RIGHT:
+		if event.button_index == MOUSE_BUTTON_RIGHT:
 			queue_free()
-		if event.button_index == BUTTON_MIDDLE:
+		if event.button_index == MOUSE_BUTTON_MIDDLE:
 			followCursor = event.pressed
-		if event.pressed and event.button_index == BUTTON_LEFT:
+		if event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 			followLink = true
 			nextEmptyLine = -1
 			for entry in range(0, linksToObject.size()):

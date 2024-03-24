@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 var serializable = []
 
@@ -36,7 +36,9 @@ func _process(delta):
 				
 
 func _physics_process(delta):
-	self.move_and_slide(walkDirection * speed)
+	self.set_velocity(walkDirection * speed)
+	self.move_and_slide()
+	self.velocity
 
 func _setCoins():
 	get_parent().get_parent().get_node("coin_display").set_coin(PlayerState.collected_coins)

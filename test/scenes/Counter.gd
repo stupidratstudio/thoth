@@ -1,6 +1,6 @@
 extends Control
 
-var value = 5 setget set_value
+var value = 5: set = set_value
 
 func _ready():
 	_display()

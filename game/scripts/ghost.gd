@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends CharacterBody2D
 
 var serializable = []
 
@@ -19,7 +19,9 @@ func _process(delta):
 			speedBoost = 0
 
 func _physics_process(delta):
-	self.move_and_slide(walkDirection * (speed+speedBoost))
+	self.set_velocity(walkDirection * (speed+speedBoost))
+	self.move_and_slide()
+	self.velocity
 
 func _on_Timer_timeout():
 	walkDirection.x = (randi()%3) - 1
@@ -29,7 +31,7 @@ func _on_Timer_timeout():
 func hit():
 	life -= 1
 	if life == 0:
-		var new_coin = coin.instance()
+		var new_coin = coin.instantiate()
 		new_coin.global_position = global_position
 		get_parent().add_child(new_coin)
 		queue_free()

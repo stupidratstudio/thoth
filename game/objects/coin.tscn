@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://game/textures/tinytown.png" type="Texture" id=1]
+[ext_resource path="res://game/textures/tinytown.png" type="Texture2D" id=1]
 [ext_resource path="res://game/scripts/coin.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
@@ -9,7 +9,7 @@ extents = Vector2( 4, 4 )
 [node name="coin" type="Node2D" groups=["player"]]
 script = ExtResource( 2 )
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2( 5, 5 )
 texture = ExtResource( 1 )
 hframes = 12

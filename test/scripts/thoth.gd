@@ -41,14 +41,14 @@ func refresh_game_state(game, now = false):
 	if _refreshing_thread.is_active():
 		_refreshing_thread.wait_to_finish()
 	_refreshing_game = game
-	_refreshing_thread.start(self, "_refresh_game_state", null)
+	_refreshing_thread.start(Callable(self, "_refresh_game_state").bind(null))
 
 func save_node(game, filename):
 	if _saving_thread.is_active():
 		_saving_thread.wait_to_finish()
 	_saving_game = game
 	_saving_filename = filename
-	_saving_thread.start(self, "_save_node_function", null)
+	_saving_thread.start(Callable(self, "_save_node_function").bind(null))
 
 func _save_node_function(dummy):
 	_refreshing_game = _saving_game
@@ -56,13 +56,15 @@ func _save_node_function(dummy):
 
 	var file = File.new()
 	file.open("user://" + _saving_filename + ".sav", File.WRITE)
-	file.store_line(to_json(_loaded_game_state))
+	file.store_line(JSON.new().stringify(_loaded_game_state))
 	file.close()
 
 func load_node(game, filename):
 	var file = File.new()
 	file.open("user://" + filename + ".sav", File.READ)
-	_loaded_game_state = parse_json(file.get_line())
+	var test_json_conv = JSON.new()
+	test_json_conv.parse(file.get_line())
+	_loaded_game_state = test_json_conv.get_data()
 	file.close()
 
 	var level = _loaded_game_state.level

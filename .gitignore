@@ -1,4 +1,6 @@
+.godot
 .import/
 *.swp
+*.tmp
 variables.sh
 old.version.txt
