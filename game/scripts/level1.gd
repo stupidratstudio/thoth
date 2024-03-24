@@ -8,6 +8,7 @@ func _ready():
 	$Savestate.load_game_state()
 	if $Savestate.visited_level(self):
 		$Savestate.unpack_game_state(self)
+		$Savestate.get_game_variables(PlayerState)
 	if PlayerState.last_visited_level == "res://game/levels/level0.tscn":
 		$objects/player.global_position = $gate_from_level0.global_position
 
