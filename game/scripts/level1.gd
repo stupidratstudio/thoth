@@ -10,7 +10,6 @@ func _ready():
 		$Savestate.unpack_game_state(self)
 	if PlayerState.last_visited_level == "res://game/levels/level0.tscn":
 		$objects/player.global_position = $gate_from_level0.global_position
-	$gate.ready = true
 
 func _on_buttons_load_pressed():
 	$Savestate.load_game_state()

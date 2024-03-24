@@ -62,8 +62,6 @@ static func _deserialize_variable(input):
 		TYPE_OBJECT_REFERENCE:
 			return input
 
-	return null
-
 ######################################
 ## data types serialization
 ######################################
@@ -134,7 +132,7 @@ static func _serialize_object(input):
 	return {
 		"type" : "object",
 		"name": input.name.replace("@","_"),
-		"filename": input.filename,
+		"scene_file_path": input.scene_file_path,
 		"transform" : _serialize_variable(input.global_transform),
 		"variables": object_variables
 	}
@@ -233,7 +231,7 @@ static func _deserialize_array(input):
 	return array
 
 static func _deserialize_object(input):
-	var object = load(input.filename).instantiate()
+	var object = load(input.scene_file_path).instantiate()
 	object.name = input.name
 	object.global_transform = _deserialize_variable(input.transform)
 	_deserialize_object_variables(object, input.variables)

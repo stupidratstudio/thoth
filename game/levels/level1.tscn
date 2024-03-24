@@ -26,10 +26,10 @@ tile_set = ExtResource("1")
 format = 2
 
 [node name="gate" parent="." instance=ExtResource("2")]
-position = Vector2(1520, 1249)
+position = Vector2(1518, 1172)
 
 [node name="gate_from_level0" type="Node2D" parent="."]
-position = Vector2(1523, 1073)
+position = Vector2(1523, 1115)
 scale = Vector2(5, 5)
 
 [node name="objects" type="Node2D" parent="."]
