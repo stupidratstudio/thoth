@@ -135,58 +135,45 @@ static func _deserialize_children(data, object, path = ""):
 		else:
 			_deserialize_children(data[child], object, child + "/")
 
-static func _deserialize_collection(input_collection, input_state):
-	#remove all children
-	for child in input_collection.get_children():
-		#do this to not mess up references later on
-		child.queue_free()
-		child.get_parent().remove_child(child)
-	for object_name in input_state:
-		var object_state = input_state[object_name]
-		var object = _deserialize_object(object_state)
-		input_collection.add_child(object)
-	_reference_solve_collection(input_collection)
-
 ###############################
 ##solve references
 ###############################
 
-static func _reference_solve_collection(input_collection):
-	for object in input_collection.get_children():
-		if object.get("TAG_VARIABLES") != null:
-			if _object_has_references(object):
-				_object_solve_references(object, input_collection)
+static func _deserialize_solve_references(object):
+	#get the serializable controller
+	var serializable = ThothSerializable._serialize_get_serializable(object)
 
-static func _object_solve_references(object, collection):
-	var variables = object.get("TAG_VARIABLES")
-	for variable_name in variables:
-		var variable_value = object.get(variable_name)
-		if _variable_is_reference(variable_value):
-			var solved_variable = _variable_solve_reference(variable_value, collection)
-			object.set(variable_name, solved_variable)
+	if serializable:
+		if len(serializable.variables):
+			for variable in serializable.variables:
+				var value = object.get(variable)
+				if typeof(value) == TYPE_DICTIONARY or typeof(value) == TYPE_ARRAY:
+					object.set(variable, _deserialize_solve_variable_reference(object, value))
 
-static func _variable_solve_reference(variable_value, collection):
-	if typeof(variable_value) == TYPE_DICTIONARY:
-		var solved_variable = collection.get_node(variable_value.name)
-		return solved_variable
-	if typeof(variable_value) == TYPE_ARRAY:
-		var array = []
-		for entry in variable_value:
-			if _variable_is_reference(entry):
-				var solved_variable = _variable_solve_reference(entry, collection)
-				array.push_back(solved_variable)
-			else:
-				array.push_back(entry)
-		return array
-	return null
+	for child in object.get_children():
+		_deserialize_solve_references(child)
 
+static func _deserialize_solve_variable_reference(object, data):
+	if typeof(data) == TYPE_DICTIONARY:
+		if data.type == "object_reference":
+			var path = data.name
+			return object.get_node_or_null(path)
+	if typeof(data) == TYPE_ARRAY:
+		var value = []
+		for entry in data:
+			value.push_back(_deserialize_solve_variable_reference(object, entry))
+		return value
+	return data
 ########################################
 ##test if contains or is reference
 ########################################
 
 static func _object_has_references(object):
-	var variables = object.get("TAG_VARIABLES")
-	for variable_name in variables:
+	var serializable = ThothSerializable._serialize_get_serializable(object)
+	if not serializable:
+		return false
+
+	for variable_name in serializable.variables:
 		var variable_value = object.get(variable_name)
 		if _variable_is_reference(variable_value):
 			return true
@@ -194,7 +181,7 @@ static func _object_has_references(object):
 
 static func _variable_is_reference(input_variable):
 	if typeof(input_variable) == TYPE_DICTIONARY:
-		return input_variable.type == "TYPE_OBJECT_REFERENCE"
+		return input_variable.type == "object_reference"
 	if typeof(input_variable) == TYPE_ARRAY:
 		for value in input_variable:
 			if _variable_is_reference(value):

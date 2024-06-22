@@ -132,7 +132,7 @@ static func _serialize_object(object):
 static func _serialize_object_reference(object):
 	return {
 		"type" : "object_reference",
-		"name": _serialize_get_name(object)
+		"name": _serialize_get_path(object)
 	}
 
 static func _serialize_children(object):
@@ -151,3 +151,6 @@ static func _serialize_children(object):
 
 static func _serialize_get_name(object):
 	return str(object.name).replace("@","_")
+
+static func _serialize_get_path(object):
+	return str(object.get_path()).replace("@","_")
