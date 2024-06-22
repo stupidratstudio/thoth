@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=3 uid="uid://4ki6bl3vfipq"]
+
+[ext_resource type="Script" path="res://game/scripts/start.gd" id="1_upxim"]
+[ext_resource type="Script" path="res://addons/thoth/thoth_gamestate.gd" id="2_qcgs2"]
+
+[node name="Start" type="Node2D"]
+script = ExtResource("1_upxim")
+
+[node name="Savestate" type="Node" parent="."]
+script = ExtResource("2_qcgs2")

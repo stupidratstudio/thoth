@@ -101,36 +101,29 @@ static func _deserialize_object(data, object = null):
 	#set the variables
 	if len(serializable.variables):
 		for variable in serializable.variables:
-			var var_value = _deserialize_variable(data.variables[variable])
-			object.set(variable, var_value)
+			if data.variables.has(variable):
+				var var_value = _deserialize_variable(data.variables[variable])
+				object.set(variable, var_value)
 
 	#set the children
 	if serializable.children:
 		for child in object.get_children():
-			print("eval:", child.name)
 			if ThothSerializable._serialize_get_serializable(child):
-				print(child.name, "...")
-				if not child.name in data.children:
-					print("remove ",child.name)
-					child.queue_free()
-					child.get_parent().remove_child(child)
+				child.queue_free()
+				child.get_parent().remove_child(child)
 		_deserialize_children(data.children, object)
 
 	return object
 
 static func _deserialize_children(data, object, path = ""):
-	print("dsrl->", object.name)
 	for child in data:
 		#is this a deserializable object?
 		if data[child].has("type"):
 			var child_name = ThothSerializer._serialize_get_name(data[child])
 			var child_object = object.get_node_or_null(path + child_name)
-			print("looking for:", path + child_name)
 			if child_object:
-				print("found")
 				_deserialize_object(data[child], child_object)
 			else:
-				print("not found")
 				child_object = _deserialize_object(data[child])
 				object.add_child(child_object)
 		else:

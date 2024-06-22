@@ -3,7 +3,7 @@ class_name ThothGameState
 
 @export var save_filename = "savegame.sav"
 var game_state = {
-	"variables": {},
+	"globals": {},
 	"maps": {}
 }
 var save_data = {}
@@ -27,10 +27,11 @@ func unpack_level(level):
 		ThothDeserializer._deserialize_object(game_state.maps[level.scene_file_path], level)
 
 func set_game_variables(node):
-	pass#game_state.variables = ThothSerializer._serialize_object_variables(node)
+	game_state.globals[node.name] = ThothSerializer._serialize_object(node)
 
 func get_game_variables(node):
-	pass#ThothDeserializer._deserialize_object_variables(node, game_state.variables)
+	if(game_state.globals.has(node.name)):
+		ThothDeserializer._deserialize_object(game_state.globals[node.name], node)
 
 func load_game_state(game_version = "default"):
 	if save_exists():

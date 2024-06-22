@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Thoth"
-run/main_scene="res://game/levels/level0.tscn"
+run/main_scene="res://game/scenes/start.tscn"
 config/features=PackedStringArray("4.2")
 config/icon="res://test/textures/icon.png"
 

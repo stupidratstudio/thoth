@@ -1,6 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://dgu355do1ulj"]
+[gd_scene load_steps=3 format=3 uid="uid://dgu355do1ulj"]
 
 [ext_resource type="Script" path="res://game/scripts/player_state.gd" id="1"]
+[ext_resource type="Script" path="res://addons/thoth/thoth_serializable.gd" id="2_hrjxw"]
 
 [node name="Node" type="Node"]
 script = ExtResource("1")
+
+[node name="Serializable" type="Node" parent="."]
+script = ExtResource("2_hrjxw")
+transform = false
+children = false
+variables = Array[String](["collected_coins", "last_visited_level", "current_level"])
