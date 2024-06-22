@@ -1,7 +1,5 @@
 extends CharacterBody2D
 
-var serializable = []
-
 var walkDirection = Vector2.ZERO
 var lastWalkDirection = Vector2.ZERO
 var speed = 300
@@ -41,4 +39,4 @@ func _physics_process(delta):
 	self.velocity
 
 func _setCoins():
-	get_parent().get_parent().get_node("coin_display").set_coin(PlayerState.collected_coins)
+	get_parent().get_parent().get_parent().get_node("coin_display").set_coin(PlayerState.collected_coins)

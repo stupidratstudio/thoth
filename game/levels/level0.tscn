@@ -1,9 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://37mgk5icr1nl"]
+[gd_scene load_steps=8 format=3 uid="uid://37mgk5icr1nl"]
 
-[ext_resource type="PackedScene" uid="uid://bdsvyh6tje1ah" path="res://game/objects/player.tscn" id="1"]
 [ext_resource type="TileSet" uid="uid://dq1akdimkwegg" path="res://game/scenes/tileset.tres" id="2"]
 [ext_resource type="PackedScene" uid="uid://b1i5gcu6hq8n3" path="res://game/objects/gate_to_level1.tscn" id="3"]
-[ext_resource type="PackedScene" uid="uid://c5dj8bsqu3lle" path="res://game/objects/coin.tscn" id="4"]
+[ext_resource type="Script" path="res://addons/thoth/thoth_serializable.gd" id="3_7hjnm"]
 [ext_resource type="Script" path="res://game/scripts/level0.gd" id="5"]
 [ext_resource type="PackedScene" uid="uid://c4ogscolghucs" path="res://game/scenes/buttons.tscn" id="6"]
 [ext_resource type="PackedScene" path="res://game/scenes/coin_display.tscn" id="7"]
@@ -24,7 +23,10 @@ layer_0/tile_data = PackedInt32Array(-131056, 393216, 10, -131055, 393216, 10, -
 z_index = 100
 tile_set = ExtResource("2")
 format = 2
-layer_0/tile_data = PackedInt32Array(-65522, 393216, 10, -65521, 393216, 10, -65520, 393216, 10, -65517, 393216, 10, -65516, 393216, 10, -65515, 393216, 10, 14, 393216, 10, 15, 393216, 10, 16, 393216, 10, 17, 196608, 9, 19, 393216, 10, 20, 393216, 10, 21, 393216, 10, 65550, 393216, 10, 65551, 393216, 10, 65552, 393216, 10, 65555, 393216, 10, 65556, 393216, 10, 65557, 393216, 10, 65553, 196608, 10, 18, 262144, 9, 65554, 262144, 10)
+layer_0/tile_data = PackedInt32Array(-65522, 393216, 10, -65521, 393216, 10, -65520, 393216, 10, -65517, 393216, 10, -65516, 393216, 10, -65515, 393216, 10, 14, 393216, 10, 15, 393216, 10, 16, 393216, 10, 17, 196608, 9, 19, 393216, 10, 20, 393216, 10, 21, 393216, 10, 65550, 393216, 10, 65551, 393216, 10, 65552, 393216, 10, 65555, 393216, 10, 65556, 393216, 10, 65557, 393216, 10, 65553, 196608, 10, 18, 262144, 9, 65554, 262144, 10, 196613, 2, 196608, 196619, 2, 65536, 524295, 2, 65536, 589834, 2, 65536, 458769, 2, 65536, 393238, 2, 65536, 786447, 2, 65536)
+
+[node name="Serializable" type="Node" parent="layers/foreground"]
+script = ExtResource("3_7hjnm")
 
 [node name="gate" parent="." instance=ExtResource("3")]
 position = Vector2(1437, -51)
@@ -32,32 +34,6 @@ position = Vector2(1437, -51)
 [node name="gate_from_level1" type="Node2D" parent="."]
 position = Vector2(1438, 95)
 scale = Vector2(5, 5)
-
-[node name="objects" type="Node2D" parent="."]
-
-[node name="coin" parent="objects" instance=ExtResource("4")]
-position = Vector2(1620, 575)
-
-[node name="coin2" parent="objects" instance=ExtResource("4")]
-position = Vector2(1230, 897)
-
-[node name="coin3" parent="objects" instance=ExtResource("4")]
-position = Vector2(694, 856)
-
-[node name="coin4" parent="objects" instance=ExtResource("4")]
-position = Vector2(427, 703)
-
-[node name="coin5" parent="objects" instance=ExtResource("4")]
-position = Vector2(957, 558)
-
-[node name="coin6" parent="objects" instance=ExtResource("4")]
-position = Vector2(626, 383)
-
-[node name="coin7" parent="objects" instance=ExtResource("4")]
-position = Vector2(1281, 362)
-
-[node name="player" parent="objects" instance=ExtResource("1")]
-position = Vector2(128, 256)
 
 [node name="buttons" parent="." instance=ExtResource("6")]
 grow_horizontal = 2
@@ -68,7 +44,9 @@ position = Vector2(0, 64)
 
 [node name="Savestate" type="Node" parent="."]
 script = ExtResource("8")
-save_filename = "savegame.sav"
+
+[node name="Serializable" type="Node" parent="."]
+script = ExtResource("3_7hjnm")
 
 [connection signal="load_pressed" from="buttons" to="." method="_on_buttons_load_pressed"]
 [connection signal="save_pressed" from="buttons" to="." method="_on_buttons_save_pressed"]

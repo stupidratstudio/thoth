@@ -1,7 +1,10 @@
-[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://dq1akdimkwegg"]
+[gd_resource type="TileSet" load_steps=9 format=3 uid="uid://dq1akdimkwegg"]
 
 [ext_resource type="Texture2D" uid="uid://dbubb4upfx0eb" path="res://game/textures/tinytown.png" id="1"]
 [ext_resource type="Texture2D" uid="uid://dcgyrons4udyd" path="res://game/textures/tinydungeon.png" id="2"]
+[ext_resource type="PackedScene" uid="uid://c5dj8bsqu3lle" path="res://game/objects/coin.tscn" id="3_kpd7a"]
+[ext_resource type="PackedScene" uid="uid://bxewo3qwddlf0" path="res://game/objects/ghost.tscn" id="4_bup2a"]
+[ext_resource type="PackedScene" uid="uid://bdsvyh6tje1ah" path="res://game/objects/player.tscn" id="5_ggk1s"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7au5o"]
 texture = ExtResource("1")
@@ -816,8 +819,14 @@ texture = ExtResource("2")
 11:10/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 11:10/0/physics_layer_0/angular_velocity = 0.0
 
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_0v0yb"]
+scenes/1/scene = ExtResource("3_kpd7a")
+scenes/2/scene = ExtResource("4_bup2a")
+scenes/3/scene = ExtResource("5_ggk1s")
+
 [resource]
 physics_layer_0/collision_layer = 3
 physics_layer_0/collision_mask = 3
 sources/1 = SubResource("TileSetAtlasSource_k20f3")
 sources/0 = SubResource("TileSetAtlasSource_7au5o")
+sources/2 = SubResource("TileSetScenesCollectionSource_0v0yb")

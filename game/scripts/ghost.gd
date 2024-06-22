@@ -32,7 +32,7 @@ func hit():
 	life -= 1
 	if life == 0:
 		var new_coin = coin.instantiate()
-		new_coin.global_position = global_position
+		new_coin.position = position
 		get_parent().add_child(new_coin)
 		queue_free()
 	speedBoost = 250

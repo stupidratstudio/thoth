@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://b3h02ygigouss"]
+[gd_scene load_steps=8 format=3 uid="uid://b3h02ygigouss"]
 
 [ext_resource type="TileSet" uid="uid://dq1akdimkwegg" path="res://game/scenes/tileset.tres" id="1"]
 [ext_resource type="PackedScene" uid="uid://b6cgwohxm4ln2" path="res://game/objects/gate_to_level0.tscn" id="2"]
-[ext_resource type="PackedScene" uid="uid://bdsvyh6tje1ah" path="res://game/objects/player.tscn" id="3"]
+[ext_resource type="Script" path="res://addons/thoth/thoth_serializable.gd" id="3_p8la6"]
 [ext_resource type="PackedScene" uid="uid://c4ogscolghucs" path="res://game/scenes/buttons.tscn" id="4"]
-[ext_resource type="PackedScene" uid="uid://bxewo3qwddlf0" path="res://game/objects/ghost.tscn" id="5"]
 [ext_resource type="Script" path="res://game/scripts/level1.gd" id="6"]
 [ext_resource type="PackedScene" path="res://game/scenes/coin_display.tscn" id="7"]
 [ext_resource type="Script" path="res://addons/thoth/thoth_gamestate.gd" id="8"]
@@ -24,6 +23,10 @@ layer_0/tile_data = PackedInt32Array(-1, 393216, 10, -65536, 393216, 10, -65535,
 z_index = 100
 tile_set = ExtResource("1")
 format = 2
+layer_0/tile_data = PackedInt32Array(851986, 2, 196608, 196612, 2, 131072, 196622, 2, 131072, 327696, 2, 131072, 327689, 2, 131072, 720900, 2, 131072, 720908, 2, 131072, 524306, 2, 131072, 524295, 2, 131072)
+
+[node name="Serializable" type="Node" parent="layers/foreground"]
+script = ExtResource("3_p8la6")
 
 [node name="gate" parent="." instance=ExtResource("2")]
 position = Vector2(1518, 1172)
@@ -31,35 +34,6 @@ position = Vector2(1518, 1172)
 [node name="gate_from_level0" type="Node2D" parent="."]
 position = Vector2(1523, 1115)
 scale = Vector2(5, 5)
-
-[node name="objects" type="Node2D" parent="."]
-
-[node name="player" parent="objects" instance=ExtResource("3")]
-position = Vector2(1519, 1078)
-
-[node name="ghost" parent="objects" instance=ExtResource("5")]
-position = Vector2(1392, 400)
-
-[node name="ghost2" parent="objects" instance=ExtResource("5")]
-position = Vector2(960, 352)
-
-[node name="ghost3" parent="objects" instance=ExtResource("5")]
-position = Vector2(1056, 640)
-
-[node name="ghost4" parent="objects" instance=ExtResource("5")]
-position = Vector2(496, 384)
-
-[node name="ghost5" parent="objects" instance=ExtResource("5")]
-position = Vector2(624, 768)
-
-[node name="ghost6" parent="objects" instance=ExtResource("5")]
-position = Vector2(272, 672)
-
-[node name="ghost7" parent="objects" instance=ExtResource("5")]
-position = Vector2(1520, 768)
-
-[node name="ghost8" parent="objects" instance=ExtResource("5")]
-position = Vector2(752, 560)
 
 [node name="buttons" parent="." instance=ExtResource("4")]
 grow_horizontal = 2
@@ -70,7 +44,9 @@ position = Vector2(0, 64)
 
 [node name="Savestate" type="Node" parent="."]
 script = ExtResource("8")
-save_filename = "savegame.sav"
+
+[node name="Serializable" type="Node" parent="."]
+script = ExtResource("3_p8la6")
 
 [connection signal="load_pressed" from="buttons" to="." method="_on_buttons_load_pressed"]
 [connection signal="save_pressed" from="buttons" to="." method="_on_buttons_save_pressed"]
