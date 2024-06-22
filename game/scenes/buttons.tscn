@@ -7,6 +7,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1")
 
 [node name="load" type="Button" parent="."]
@@ -22,5 +24,14 @@ offset_right = 256.0
 offset_bottom = 64.0
 text = "Save"
 
+[node name="exit" type="Button" parent="."]
+layout_mode = 0
+offset_left = 256.0
+offset_right = 384.0
+offset_bottom = 64.0
+text = "Exit
+"
+
 [connection signal="pressed" from="load" to="." method="_on_load_pressed"]
 [connection signal="pressed" from="save" to="." method="_on_save_pressed"]
+[connection signal="pressed" from="exit" to="." method="_on_exit_pressed"]

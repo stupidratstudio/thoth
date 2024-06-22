@@ -10,7 +10,7 @@ func set_value(v):
 	_display()
 
 func _display():
-	$Display.text = String(value)
+	$Display.text = str(value)
 
 func _on_Down_pressed():
 	value -= 1

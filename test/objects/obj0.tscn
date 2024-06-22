@@ -1,16 +1,13 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=3 uid="uid://d1d53x22xlnvx"]
 
-[ext_resource path="res://test/textures/ibis0.png" type="Texture2D" id=2]
+[ext_resource type="Script" path="res://addons/thoth/thoth_serializable.gd" id="1_qr31e"]
+[ext_resource type="Texture2D" uid="uid://c0u8fr6w6pdg5" path="res://test/textures/ibis0.png" id="2"]
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id="2"]
 script/source = "extends Node2D
 
 var followCursor = false
 var color = Color(1,1,1): set = _set_color
-
-const serializable = [
-	\"color\"
-]
 
 func _unhandled_input(event):
 	if followCursor:
@@ -52,11 +49,9 @@ func findNewSpot():
 	if dirY == 2:
 		newPos.y -= d
 
-	$Tween.stop(self, \"position\")
-	$Tween.interpolate_property(self, \"position\", position, newPos, 0.1*scale.x, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	$Tween.start()
-	$Tween2.interpolate_property(self, \"rotation\", rotation, deg_to_rad(90*(randi()%4)), 0.3*scale.x, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	$Tween2.start()
+	var tween: Tween = create_tween()
+	tween.tween_property(self, \"position\", newPos, 1)
+	tween.parallel().tween_property(self, \"rotation\", deg_to_rad(90*(randi()%4)), 1)
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:
@@ -79,23 +74,24 @@ func _set_color(c):
 	$Icon.modulate.b = c.b
 "
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id="1"]
 radius = 32.0
 
 [node name="obj0" type="Node2D"]
-script = SubResource( 2 )
+script = SubResource("2")
+
+[node name="Serializable" type="Node" parent="."]
+script = ExtResource("1_qr31e")
+children = false
+variables = Array[String](["color"])
 
 [node name="Icon" type="Sprite2D" parent="."]
-texture = ExtResource( 2 )
+texture = ExtResource("2")
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 1 )
-
-[node name="Tween" type="Tween" parent="."]
-
-[node name="Tween2" type="Tween" parent="."]
+shape = SubResource("1")
 
 [node name="Timer" type="Timer" parent="."]
 autostart = true

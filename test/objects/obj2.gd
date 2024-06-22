@@ -6,10 +6,6 @@ var followLink = false
 var linkToObject = null
 @onready var line = $Line2D
 
-const serializable = [
-	"linkToObject"
-]
-
 func _process(_delta):
 	if !is_instance_valid(linkToObject):
 		linkToObject = null

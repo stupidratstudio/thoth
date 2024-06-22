@@ -86,7 +86,12 @@ static func _deserialize_array(input):
 static func _deserialize_object(data, object = null):
 	#do we update an object or create it?
 	if not object:
-		object = load(data.scene_file_path).instantiate()
+		if data.has("scene_file_path"):
+			object = load(data.scene_file_path).instantiate()
+		else:
+			if not data.object_type:
+				printerr("Something went wrong brufstorg")
+			object = ClassDB.instantiate(data.object_type)
 
 	#set the name
 	object.name = data.name
@@ -109,8 +114,9 @@ static func _deserialize_object(data, object = null):
 	if serializable.children:
 		for child in object.get_children():
 			if ThothSerializable._serialize_get_serializable(child):
-				child.queue_free()
-				child.get_parent().remove_child(child)
+				if not child.name in data.children:
+					child.queue_free()
+					child.get_parent().remove_child(child)
 		_deserialize_children(data.children, object)
 
 	return object

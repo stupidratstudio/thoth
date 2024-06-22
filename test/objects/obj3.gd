@@ -7,11 +7,6 @@ var linksToObject = []
 var nextEmptyLine = 0
 var color = Color(1,1,1): set = _set_color
 
-const serializable = [
-	"color",
-	"linksToObject"
-]
-
 func _ready():
 	if linksToObject.size() == 0:
 		var newLen = 6# randi()%5 + 1
@@ -120,9 +115,8 @@ func findNewSpot():
 	if dirY == 2:
 		newPos.y -= d
 
-	$Tween.stop(self, "position")
-	$Tween.interpolate_property(self, "position", position, newPos, 0.1*scale.x, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	$Tween.start()
+	var tween: Tween = create_tween()
+	tween.tween_property(self, "position", newPos, 1)
 
 func _set_color(c):
 	color = c

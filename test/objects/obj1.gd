@@ -3,10 +3,6 @@ extends Node2D
 var followCursor = false
 var color = Color(1,1,1): set = _set_color
 
-const serializable = [
-	"color"
-]
-
 func _ready():
 	pass
 
@@ -31,10 +27,9 @@ func findNewSpot():
 	newScale.x = dirX/5.0
 	newScale.y = dirY/5.0
 
-	$Tween.interpolate_property(self, "scale", scale, newScale, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	$Tween.start()
-	$Tween2.interpolate_property(self, "rotation", rotation, deg_to_rad(45*(randi()%8)), 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	$Tween2.start()
+	var tween: Tween = create_tween()
+	tween.tween_property(self, "scale", newScale, 1)
+	tween.parallel().tween_property(self, "rotation", deg_to_rad(45*(randi()%8)), 1)
 
 func _on_Area2D_input_event(viewport, event, shape_idx):
 	if event is InputEventMouseButton:

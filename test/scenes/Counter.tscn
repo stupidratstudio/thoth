@@ -1,24 +1,31 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://dshf36e0itdtc"]
 
-[ext_resource path="res://test/scenes/Counter.gd" type="Script" id=1]
+[ext_resource type="Script" path="res://test/scenes/Counter.gd" id="1"]
 
 [node name="Counter" type="Control"]
+layout_mode = 3
+anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-script = ExtResource( 1 )
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
 
 [node name="Display" type="Button" parent="."]
+layout_mode = 0
 offset_left = 64.0
 offset_right = 128.0
 offset_bottom = 64.0
 disabled = true
 
 [node name="Down" type="Button" parent="."]
+layout_mode = 0
 offset_right = 64.0
 offset_bottom = 64.0
 text = "<"
 
 [node name="Up" type="Button" parent="."]
+layout_mode = 0
 offset_left = 128.0
 offset_right = 192.0
 offset_bottom = 64.0

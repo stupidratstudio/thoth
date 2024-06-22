@@ -9,5 +9,5 @@ func _on_load_pressed():
 func _on_save_pressed():
 	emit_signal("save_pressed")
 
-func _on_back_pressed():
-	get_tree().change_scene_to_file("res://test/scenes/test.tscn")
+func _on_exit_pressed():
+	get_tree().change_scene_to_file("res://test/test.tscn")

@@ -1,51 +1,57 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=3 uid="uid://cblpj2wjxdkr8"]
 
-[ext_resource path="res://test/scenes/level2.gd" type="Script" id=1]
-[ext_resource path="res://test/scenes/Counter.tscn" type="PackedScene" id=2]
-[ext_resource path="res://test/scenes/tileset.tres" type="TileSet" id=5]
-[ext_resource path="res://test/scenes/buttons.tscn" type="PackedScene" id=7]
-[ext_resource path="res://addons/thoth/thoth_gamestate.gd" type="Script" id=8]
+[ext_resource type="Script" path="res://test/scenes/level2.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://dshf36e0itdtc" path="res://test/scenes/Counter.tscn" id="2"]
+[ext_resource type="Script" path="res://addons/thoth/thoth_serializable.gd" id="2_8sa7s"]
+[ext_resource type="TileSet" path="res://test/scenes/tileset.tres" id="5"]
+[ext_resource type="PackedScene" uid="uid://c3b4ot52r7y1h" path="res://test/scenes/buttons.tscn" id="7"]
+[ext_resource type="Script" path="res://addons/thoth/thoth_gamestate.gd" id="8"]
 
 [node name="level2" type="Node2D"]
-script = ExtResource( 1 )
+script = ExtResource("1")
+
+[node name="Serializable" type="Node" parent="."]
+script = ExtResource("2_8sa7s")
+transform = false
+children = false
+variables = Array[String](["a", "b", "c", "d"])
 
 [node name="TileMap" type="TileMap" parent="."]
-scale = Vector2( 4, 4 )
 z_index = -1
-tile_set = ExtResource( 5 )
-cell_size = Vector2( 16, 16 )
-cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
-format = 1
+scale = Vector2(4, 4)
+tile_set = ExtResource("5")
+format = 2
 
 [node name="Savestate" type="Node" parent="."]
-script = ExtResource( 8 )
-save_filename = "savegame.sav"
+script = ExtResource("8")
 
-[node name="a" parent="." instance=ExtResource( 2 )]
+[node name="a" parent="." instance=ExtResource("2")]
 offset_left = 192.0
 offset_top = 192.0
 offset_right = 192.0
 offset_bottom = 192.0
 
-[node name="b" parent="." instance=ExtResource( 2 )]
+[node name="b" parent="." instance=ExtResource("2")]
 offset_left = 704.0
 offset_top = 192.0
 offset_right = 704.0
 offset_bottom = 192.0
 
-[node name="c" parent="." instance=ExtResource( 2 )]
+[node name="c" parent="." instance=ExtResource("2")]
 offset_left = 192.0
 offset_top = 448.0
 offset_right = 192.0
 offset_bottom = 448.0
 
-[node name="d" parent="." instance=ExtResource( 2 )]
+[node name="d" parent="." instance=ExtResource("2")]
 offset_left = 704.0
 offset_top = 448.0
 offset_right = 704.0
 offset_bottom = 448.0
 
-[node name="buttons" parent="." instance=ExtResource( 7 )]
+[node name="buttons" parent="." instance=ExtResource("7")]
+grow_horizontal = 2
+grow_vertical = 2
 
 [connection signal="load_pressed" from="buttons" to="." method="_on_buttons_load_pressed"]
 [connection signal="save_pressed" from="buttons" to="." method="_on_buttons_save_pressed"]

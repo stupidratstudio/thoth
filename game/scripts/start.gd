@@ -1,6 +1,6 @@
 extends Node2D
 
-func _ready():
+func _process(delta):
 	$Savestate.load_game_state()
 	$Savestate.get_game_variables(PlayerState)
 	if PlayerState.current_level != "":

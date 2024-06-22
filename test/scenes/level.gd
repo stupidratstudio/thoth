@@ -5,10 +5,6 @@ extends Node2D
 @onready var obj2 = preload("res://test/objects/obj2.tscn")
 @onready var obj3 = preload("res://test/objects/obj3.tscn")
 
-const serializable_collections = [
-	"objects"
-]
-
 func _ready():
 	randomize()
 
@@ -35,9 +31,9 @@ func _unhandled_input(event):
 
 func _on_buttons_load_pressed():
 	$Savestate.load_game_state()
-	$Savestate.unpack_game_state(self)
+	$Savestate.unpack_level(self)
 
 func _on_buttons_save_pressed():
 	$Savestate.load_game_state()
-	$Savestate.pack_game_state(self)
+	$Savestate.pack_level(self)
 	$Savestate.save_game_state()

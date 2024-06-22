@@ -107,6 +107,9 @@ static func _serialize_object(object):
 	if object is TileMap:
 		serialized["core_object"] = true
 		serialized["object_type"] = "TileMap"
+	elif object.scene_file_path == "":
+		serialized["core_object"] = true
+		serialized["object_type"] = object.get_class()
 	else:
 		serialized["scene_file_path"] = object.scene_file_path
 

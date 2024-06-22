@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://dqx5ce5344p3i"]
+
+[ext_resource type="Script" path="res://test/scenes/test.gd" id="1_lw71e"]
+[ext_resource type="PackedScene" uid="uid://od8il8hedeka" path="res://test/scenes/test_buttons.tscn" id="2_yi2o3"]
+[ext_resource type="PackedScene" uid="uid://dshf36e0itdtc" path="res://test/scenes/Counter.tscn" id="3_6x6fa"]
+[ext_resource type="PackedScene" uid="uid://c3b4ot52r7y1h" path="res://test/scenes/buttons.tscn" id="4_q1ivq"]
+[ext_resource type="Script" path="res://addons/thoth/thoth_gamestate.gd" id="5_whpv2"]
+[ext_resource type="Script" path="res://addons/thoth/thoth_serializable.gd" id="6_3d5wp"]
+
+[node name="main" type="Node2D"]
+script = ExtResource("1_lw71e")
+
+[node name="buttons" parent="." instance=ExtResource("2_yi2o3")]
+
+[node name="a" parent="." instance=ExtResource("3_6x6fa")]
+offset_left = 800.0
+offset_top = 128.0
+offset_right = 800.0
+offset_bottom = 128.0
+
+[node name="b" parent="." instance=ExtResource("3_6x6fa")]
+offset_left = 800.0
+offset_top = 256.0
+offset_right = 800.0
+offset_bottom = 256.0
+
+[node name="c" parent="." instance=ExtResource("3_6x6fa")]
+offset_left = 800.0
+offset_top = 192.0
+offset_right = 800.0
+offset_bottom = 192.0
+
+[node name="config" parent="." instance=ExtResource("4_q1ivq")]
+offset_left = 768.0
+offset_top = 320.0
+offset_right = 768.0
+offset_bottom = 320.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ConfigState" type="Node" parent="."]
+script = ExtResource("5_whpv2")
+save_filename = "config.cfg"
+
+[node name="Serializable" type="Node" parent="."]
+script = ExtResource("6_3d5wp")
+transform = false
+children = false
+variables = Array[String](["a", "b", "c"])
+
+[connection signal="load_pressed" from="config" to="." method="_on_config_load_pressed"]
+[connection signal="save_pressed" from="config" to="." method="_on_config_save_pressed"]

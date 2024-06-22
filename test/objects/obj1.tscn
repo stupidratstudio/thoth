@@ -1,84 +1,27 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=3 uid="uid://bmyuihe17qi3r"]
 
-[ext_resource path="res://test/textures/ibis1.png" type="Texture2D" id=2]
+[ext_resource type="Script" path="res://test/objects/obj1.gd" id="1_8s33j"]
+[ext_resource type="Script" path="res://addons/thoth/thoth_serializable.gd" id="1_rwh1o"]
+[ext_resource type="Texture2D" uid="uid://dyljj8i8m0w1y" path="res://test/textures/ibis1.png" id="2"]
 
-[sub_resource type="GDScript" id=2]
-script/source = "extends Node2D
-
-var followCursor = false
-var color = Color(1,1,1): set = _set_color
-
-const serializable = [
-	\"color\"
-]
-
-func _ready():
-	pass
-
-func _unhandled_input(event):
-	if followCursor:
-		if event is InputEventMouseMotion:
-			position = event.position
-
-func _on_Area2D_area_entered(area):
-	findNewSpot()
-
-func findNewSpot():
-	if followCursor:
-		return
-
-	var dirX = randi()%10 + 1
-	var dirY = randi()%10 + 1
-
-	var d = 32 * scale.x
-
-	var newScale = scale
-	newScale.x = dirX/5.0
-	newScale.y = dirY/5.0
-
-	$Tween.interpolate_property(self, \"scale\", scale, newScale, 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	$Tween.start()
-	$Tween2.interpolate_property(self, \"rotation\", rotation, deg_to_rad(45*(randi()%8)), 0.5, Tween.TRANS_LINEAR, Tween.EASE_IN_OUT)
-	$Tween2.start()
-
-func _on_Area2D_input_event(viewport, event, shape_idx):
-	if event is InputEventMouseButton:
-		if event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_UP:
-			self.color = Color(0,0,0)
-			while color.r == 0 and color.g == 0 and color.b == 0:
-				self.color = Color((randi()%3)*0.5,(randi()%3)*0.5,(randi()%3)*0.5)
-		if event.pressed and event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
-			var newScale = randi()%4 + 1
-			scale = Vector2.ONE * newScale
-		if event.button_index == MOUSE_BUTTON_RIGHT:
-			queue_free()
-		if event.button_index == MOUSE_BUTTON_MIDDLE:
-			followCursor = event.pressed
-
-func _set_color(c):
-	color = c
-	$Icon.modulate.r = c.r
-	$Icon.modulate.g = c.g
-	$Icon.modulate.b = c.b
-"
-
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id="1"]
 radius = 32.0
 
 [node name="obj1" type="Node2D"]
-script = SubResource( 2 )
+script = ExtResource("1_8s33j")
+
+[node name="Serializable" type="Node" parent="."]
+script = ExtResource("1_rwh1o")
+children = false
+variables = Array[String](["color"])
 
 [node name="Icon" type="Sprite2D" parent="."]
-texture = ExtResource( 2 )
+texture = ExtResource("2")
 
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 1 )
-
-[node name="Tween" type="Tween" parent="."]
-
-[node name="Tween2" type="Tween" parent="."]
+shape = SubResource("1")
 
 [connection signal="area_entered" from="Area2D" to="." method="_on_Area2D_area_entered"]
 [connection signal="input_event" from="Area2D" to="." method="_on_Area2D_input_event"]

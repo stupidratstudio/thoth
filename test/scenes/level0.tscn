@@ -1,54 +1,61 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=3 uid="uid://b2tv8163op4e1"]
 
-[ext_resource path="res://test/objects/obj3.tscn" type="PackedScene" id=1]
-[ext_resource path="res://test/objects/obj2.tscn" type="PackedScene" id=2]
-[ext_resource path="res://test/objects/obj1.tscn" type="PackedScene" id=3]
-[ext_resource path="res://test/objects/obj0.tscn" type="PackedScene" id=4]
-[ext_resource path="res://test/scenes/level.gd" type="Script" id=5]
-[ext_resource path="res://test/scenes/tileset.tres" type="TileSet" id=6]
-[ext_resource path="res://addons/thoth/thoth_gamestate.gd" type="Script" id=7]
-[ext_resource path="res://test/scenes/buttons.tscn" type="PackedScene" id=8]
+[ext_resource type="PackedScene" uid="uid://bragq3hxlwc6" path="res://test/objects/obj3.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://cjeqa7rgd7df6" path="res://test/objects/obj2.tscn" id="2"]
+[ext_resource type="Script" path="res://addons/thoth/thoth_serializable.gd" id="2_8u1ri"]
+[ext_resource type="PackedScene" uid="uid://bmyuihe17qi3r" path="res://test/objects/obj1.tscn" id="3"]
+[ext_resource type="PackedScene" uid="uid://d1d53x22xlnvx" path="res://test/objects/obj0.tscn" id="4"]
+[ext_resource type="Script" path="res://test/scenes/level.gd" id="5"]
+[ext_resource type="TileSet" path="res://test/scenes/tileset.tres" id="6"]
+[ext_resource type="Script" path="res://addons/thoth/thoth_gamestate.gd" id="7"]
+[ext_resource type="PackedScene" uid="uid://c3b4ot52r7y1h" path="res://test/scenes/buttons.tscn" id="8"]
 
-[sub_resource type="CircleShape2D" id=1]
+[sub_resource type="CircleShape2D" id="1"]
 radius = 32.0
 
 [node name="level0" type="Node2D"]
-script = ExtResource( 5 )
+script = ExtResource("5")
 
-[node name="buttons" parent="." instance=ExtResource( 8 )]
+[node name="Serializable" type="Node" parent="."]
+script = ExtResource("2_8u1ri")
+transform = false
+
+[node name="buttons" parent="." instance=ExtResource("8")]
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="objects" type="Node2D" parent="."]
 
-[node name="obj0" parent="objects" instance=ExtResource( 4 )]
-position = Vector2( 64, 192 )
+[node name="Serializable" type="Node" parent="objects"]
+script = ExtResource("2_8u1ri")
+transform = false
 
-[node name="obj1" parent="objects" instance=ExtResource( 3 )]
-position = Vector2( 192, 192 )
+[node name="obj0" parent="objects" instance=ExtResource("4")]
+position = Vector2(64, 192)
 
-[node name="obj2" parent="objects" instance=ExtResource( 2 )]
-position = Vector2( 64, 320 )
+[node name="obj1" parent="objects" instance=ExtResource("3")]
+position = Vector2(192, 192)
 
-[node name="obj3" parent="objects" instance=ExtResource( 1 )]
-position = Vector2( 192, 320 )
+[node name="obj2" parent="objects" instance=ExtResource("2")]
+position = Vector2(64, 320)
+
+[node name="obj3" parent="objects" instance=ExtResource("1")]
+position = Vector2(192, 320)
 
 [node name="Area2D" type="Area2D" parent="."]
 monitorable = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource( 1 )
+shape = SubResource("1")
 
 [node name="TileMap" type="TileMap" parent="."]
-scale = Vector2( 4, 4 )
 z_index = -1
-tile_set = ExtResource( 6 )
-cell_size = Vector2( 16, 16 )
-cell_custom_transform = Transform2D( 16, 0, 0, 16, 0, 0 )
-format = 1
-tile_data = PackedInt32Array( 65540, 0, 65536, 65544, 0, 4, 65545, 0, 2, 65546, 0, 3, 65548, 0, 65536, 65552, 0, 65536, 65554, 0, 4, 65555, 0, 2, 65556, 0, 3, 65558, 0, 65536, 131076, 0, 131072, 131080, 0, 131072, 131084, 0, 131072, 131088, 0, 131072, 131090, 0, 131072, 131094, 0, 131072, 196612, 0, 131072, 196616, 0, 327684, 196617, 0, 2, 196618, 0, 3, 196620, 0, 131072, 196624, 0, 131072, 196626, 0, 327684, 196627, 0, 2, 196628, 0, 3, 196630, 0, 131072, 262148, 0, 131072, 262152, 0, 131072, 262156, 0, 196612, 262157, 0, 7, 262159, 0, 4, 262160, 0, 196615, 262162, 0, 131072, 262166, 0, 131072, 327684, 0, 131072, 327688, 0, 131072, 327693, 0, 196612, 327694, 0, 262150, 327695, 0, 196615, 327698, 0, 131072, 327702, 0, 131072, 393220, 0, 196612, 393221, 0, 2, 393222, 0, 3, 393224, 0, 196612, 393225, 0, 2, 393226, 0, 3, 393230, 0, 196608, 393234, 0, 196612, 393235, 0, 2, 393236, 0, 3, 393238, 0, 196612, 393239, 0, 2, 393240, 0, 3, 589828, 0, 1, 589829, 0, 2, 589830, 0, 2, 589831, 0, 7, 589833, 0, 4, 589834, 0, 2, 589835, 0, 3, 589837, 0, 4, 589838, 0, 2, 589839, 0, 7, 589841, 0, 4, 589842, 0, 2, 589843, 0, 2, 589844, 0, 7, 655367, 0, 196608, 655369, 0, 131072, 655373, 0, 131072, 655375, 0, 131072, 655377, 0, 131072, 655380, 0, 131072, 720902, 0, 0, 720905, 0, 327684, 720906, 0, 2, 720907, 0, 3, 720909, 0, 65540, 720910, 0, 6, 720911, 0, 196615, 720913, 0, 131072, 720916, 0, 131072, 786437, 0, 0, 786441, 0, 131072, 786445, 0, 131076, 786446, 0, 196611, 786449, 0, 131072, 786452, 0, 131072, 851972, 0, 65536, 851977, 0, 131072, 851981, 0, 131072, 851983, 0, 65536, 851985, 0, 131072, 851988, 0, 131072, 917508, 0, 196612, 917509, 0, 2, 917510, 0, 2, 917511, 0, 3, 917513, 0, 196612, 917514, 0, 2, 917515, 0, 3, 917517, 0, 196608, 917519, 0, 196608, 917521, 0, 196612, 917522, 0, 2, 917523, 0, 2, 917524, 0, 196615 )
+scale = Vector2(4, 4)
+tile_set = ExtResource("6")
+format = 2
 
 [node name="Savestate" type="Node" parent="."]
-script = ExtResource( 7 )
-save_filename = "savegame.sav"
+script = ExtResource("7")
 
 [connection signal="load_pressed" from="buttons" to="." method="_on_buttons_load_pressed"]
 [connection signal="save_pressed" from="buttons" to="." method="_on_buttons_save_pressed"]
