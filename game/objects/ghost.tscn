@@ -28,6 +28,6 @@ autostart = true
 [node name="Serializable" type="Node" parent="."]
 script = ExtResource("3_ewiyt")
 children = false
-variables = Array[String](["life"])
+variables = Array[String](["life", "speed"])
 
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

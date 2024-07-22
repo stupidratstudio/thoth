@@ -1,7 +1,5 @@
 extends CharacterBody2D
 
-var serializable = []
-
 var coin = preload("res://game/objects/coin.tscn")
 
 var walkDirection = Vector2.ZERO

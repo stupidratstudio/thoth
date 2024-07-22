@@ -3,10 +3,6 @@ extends Node2D
 var followCursor = false
 var color = Color(1,1,1): set = _set_color
 
-const serializable = [
-	"color"
-]
-
 func _unhandled_input(event):
 	if followCursor:
 		if event is InputEventMouseMotion:

@@ -99,6 +99,9 @@ static func _deserialize_object(data, object = null):
 	#get the serializable controller
 	var serializable = ThothSerializable._serialize_get_serializable(object)
 
+	if not serializable:
+		return null
+
 	#set the transform
 	if serializable.transform:
 		object.transform = _deserialize_variable(data.transform)

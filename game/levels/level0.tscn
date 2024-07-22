@@ -45,8 +45,6 @@ script = ExtResource("5_6ynsj")
 incoming_level = "res://game/levels/level1.tscn"
 
 [node name="buttons" parent="." instance=ExtResource("6")]
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="coin_display" parent="." instance=ExtResource("7")]
 position = Vector2(0, 64)
