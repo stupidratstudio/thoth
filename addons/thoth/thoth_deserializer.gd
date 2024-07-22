@@ -93,6 +93,9 @@ static func _deserialize_object(data, object = null):
 				printerr("Something went wrong brufstorg")
 			object = ClassDB.instantiate(data.object_type)
 
+	if not data:
+		return null
+
 	#set the name
 	object.name = data.name
 
