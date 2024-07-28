@@ -23,6 +23,8 @@ static func _serialize_variable(variable, object_convert_to_references = false):
 			return _serialize_transform2d(variable)
 		TYPE_ARRAY:
 			return _serialize_array(variable)
+		TYPE_DICTIONARY:
+			return _serialize_dictionary(variable)
 		TYPE_OBJECT:
 			if object_convert_to_references:
 				return _serialize_object_reference(variable)
@@ -87,6 +89,15 @@ static func _serialize_array(input):
 	return {
 		"type": "array",
 		"data": array
+	}
+
+static func _serialize_dictionary(input):
+	var dict = {}
+	for entry in input:
+		dict[entry] = _serialize_variable(input[entry], true)
+	return {
+		"type": "dictionary",
+		"data": dict
 	}
 
 static func _serialize_object(object):

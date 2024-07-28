@@ -27,6 +27,8 @@ static func _deserialize_variable(input):
 			return _deserialize_transform2d(input)
 		"array":
 			return _deserialize_array(input)
+		"dictionary":
+			return _deserialize_dictionary(input)
 		"object":
 			return _deserialize_object(input)
 		"object_reference":
@@ -82,6 +84,12 @@ static func _deserialize_array(input):
 	for entry in input.data:
 		array.push_back(_deserialize_variable(entry))
 	return array
+
+static func _deserialize_dictionary(input):
+	var dict = {}
+	for entry in input.data:
+		dict[entry] = _deserialize_variable(input.data[entry])
+	return dict
 
 static func _deserialize_object(data, object = null):
 	#do we update an object or create it?
