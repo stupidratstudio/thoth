@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://b2tv8163op4e1"]
+[gd_scene load_steps=10 format=3 uid="uid://b2tv8163op4e1"]
 
 [ext_resource type="PackedScene" uid="uid://bragq3hxlwc6" path="res://test/objects/obj3.tscn" id="1"]
 [ext_resource type="PackedScene" uid="uid://cjeqa7rgd7df6" path="res://test/objects/obj2.tscn" id="2"]
@@ -10,9 +10,6 @@
 [ext_resource type="Script" path="res://addons/thoth/thoth_gamestate.gd" id="7"]
 [ext_resource type="PackedScene" uid="uid://c3b4ot52r7y1h" path="res://test/scenes/buttons.tscn" id="8"]
 
-[sub_resource type="CircleShape2D" id="1"]
-radius = 32.0
-
 [node name="level0" type="Node2D"]
 script = ExtResource("5")
 
@@ -21,8 +18,6 @@ script = ExtResource("2_8u1ri")
 transform = false
 
 [node name="buttons" parent="." instance=ExtResource("8")]
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="objects" type="Node2D" parent="."]
 
@@ -41,12 +36,6 @@ position = Vector2(64, 320)
 
 [node name="obj3" parent="objects" instance=ExtResource("1")]
 position = Vector2(192, 320)
-
-[node name="Area2D" type="Area2D" parent="."]
-monitorable = false
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-shape = SubResource("1")
 
 [node name="TileMap" type="TileMap" parent="."]
 z_index = -1
