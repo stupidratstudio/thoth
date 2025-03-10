@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b2tv8163op4e1"]
+[gd_scene load_steps=11 format=3 uid="uid://b2tv8163op4e1"]
 
 [ext_resource type="PackedScene" uid="uid://bragq3hxlwc6" path="res://test/objects/obj3.tscn" id="1"]
 [ext_resource type="PackedScene" uid="uid://cjeqa7rgd7df6" path="res://test/objects/obj2.tscn" id="2"]
@@ -9,6 +9,9 @@
 [ext_resource type="TileSet" path="res://test/scenes/tileset.tres" id="6"]
 [ext_resource type="Script" path="res://addons/thoth/thoth_gamestate.gd" id="7"]
 [ext_resource type="PackedScene" uid="uid://c3b4ot52r7y1h" path="res://test/scenes/buttons.tscn" id="8"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xbpie"]
+radius = 32.0
 
 [node name="level0" type="Node2D"]
 script = ExtResource("5")
@@ -45,6 +48,12 @@ format = 2
 
 [node name="Savestate" type="Node" parent="."]
 script = ExtResource("7")
+
+[node name="Area2D" type="Area2D" parent="."]
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_xbpie")
 
 [connection signal="load_pressed" from="buttons" to="." method="_on_buttons_load_pressed"]
 [connection signal="save_pressed" from="buttons" to="." method="_on_buttons_save_pressed"]

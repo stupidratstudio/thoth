@@ -169,7 +169,7 @@ static func _deserialize_solve_references(object):
 
 static func _deserialize_solve_variable_reference(object, data):
 	if typeof(data) == TYPE_DICTIONARY:
-		if data.type == "object_reference":
+		if data.has("type") and data.type == "object_reference":
 			var path = data.name
 			return object.get_node_or_null(path)
 	if typeof(data) == TYPE_ARRAY:

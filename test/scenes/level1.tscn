@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://d1d53x22xlnvx" path="res://test/objects/obj0.tscn" id="4"]
 [ext_resource type="TileSet" path="res://test/scenes/tileset.tres" id="5"]
 [ext_resource type="Script" path="res://test/scenes/level.gd" id="6"]
-[ext_resource type="PackedScene" path="res://test/scenes/buttons.tscn" id="7"]
+[ext_resource type="PackedScene" uid="uid://c3b4ot52r7y1h" path="res://test/scenes/buttons.tscn" id="7"]
 [ext_resource type="Script" path="res://addons/thoth/thoth_gamestate.gd" id="8"]
 
 [sub_resource type="CircleShape2D" id="1"]
@@ -17,10 +17,6 @@ radius = 32.0
 script = ExtResource("6")
 
 [node name="buttons" parent="." instance=ExtResource("7")]
-layout_mode = 3
-anchors_preset = 15
-grow_horizontal = 2
-grow_vertical = 2
 
 [node name="Label" type="Label" parent="."]
 offset_left = 7.0
