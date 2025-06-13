@@ -80,7 +80,7 @@ static func _deserialize_transform2d(input):
 	)
 
 static func _deserialize_array(input):
-	var array = []
+	var array: Array = []
 	for entry in input.data:
 		array.push_back(_deserialize_variable(entry))
 	return array
