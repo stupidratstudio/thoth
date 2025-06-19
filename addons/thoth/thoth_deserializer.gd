@@ -122,7 +122,12 @@ static func _deserialize_object(data, object = null):
 		for variable in serializable.variables:
 			if data.variables.has(variable):
 				var var_value = _deserialize_variable(data.variables[variable])
-				object.set(variable, var_value)
+                var var_reference = object.get(variable)
+
+                if typeof(var_reference) == TYPE_ARRAY:
+                    var_reference.assign(var_value)
+                else:
+                    object.set(variable, var_value)
 
 	#set the children
 	if serializable.children:
