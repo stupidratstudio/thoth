@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://4ki6bl3vfipq"]
 
-[ext_resource type="Script" path="res://game/scripts/start.gd" id="1_upxim"]
-[ext_resource type="Script" path="res://addons/thoth/thoth_gamestate.gd" id="2_qcgs2"]
+[ext_resource type="Script" uid="uid://b7whriaorm10c" path="res://game/scripts/start.gd" id="1_upxim"]
+[ext_resource type="Script" uid="uid://b146xa42md0k3" path="res://addons/thoth/thoth_gamestate.gd" id="2_qcgs2"]
 
 [node name="Start" type="Node2D"]
 visible = false

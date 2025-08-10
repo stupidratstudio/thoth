@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://b6cgwohxm4ln2"]
 
-[ext_resource type="Script" path="res://game/scripts/gate.gd" id="1"]
+[ext_resource type="Script" uid="uid://cg4uocpoib66m" path="res://game/scripts/gate.gd" id="1"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 

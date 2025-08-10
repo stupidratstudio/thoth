@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dgu355do1ulj"]
 
-[ext_resource type="Script" path="res://game/scripts/player_state.gd" id="1"]
-[ext_resource type="Script" path="res://addons/thoth/thoth_serializable.gd" id="2_hrjxw"]
+[ext_resource type="Script" uid="uid://dyr5caut53x2x" path="res://game/scripts/player_state.gd" id="1"]
+[ext_resource type="Script" uid="uid://nmgti4nnwjet" path="res://addons/thoth/thoth_serializable.gd" id="2_hrjxw"]
 
 [node name="Node" type="Node"]
 script = ExtResource("1")

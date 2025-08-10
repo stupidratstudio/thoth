@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://c5dj8bsqu3lle"]
 
 [ext_resource type="Texture2D" uid="uid://dbubb4upfx0eb" path="res://game/textures/tinytown.png" id="1"]
-[ext_resource type="Script" path="res://game/scripts/coin.gd" id="2"]
-[ext_resource type="Script" path="res://addons/thoth/thoth_serializable.gd" id="2_pnh23"]
+[ext_resource type="Script" uid="uid://bjvm1csx8s1ow" path="res://game/scripts/coin.gd" id="2"]
+[ext_resource type="Script" uid="uid://nmgti4nnwjet" path="res://addons/thoth/thoth_serializable.gd" id="2_pnh23"]
 
 [sub_resource type="RectangleShape2D" id="1"]
 size = Vector2(8, 8)

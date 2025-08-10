@@ -1,13 +1,13 @@
 [gd_scene load_steps=9 format=3 uid="uid://37mgk5icr1nl"]
 
 [ext_resource type="TileSet" uid="uid://dq1akdimkwegg" path="res://game/scenes/tileset.tres" id="2"]
-[ext_resource type="Script" path="res://addons/thoth/thoth_serializable.gd" id="3_7hjnm"]
+[ext_resource type="Script" uid="uid://nmgti4nnwjet" path="res://addons/thoth/thoth_serializable.gd" id="3_7hjnm"]
 [ext_resource type="PackedScene" uid="uid://b6cgwohxm4ln2" path="res://game/objects/gate.tscn" id="4_yb6mh"]
-[ext_resource type="Script" path="res://game/scripts/level.gd" id="5"]
-[ext_resource type="Script" path="res://game/scripts/gate_destination.gd" id="5_6ynsj"]
+[ext_resource type="Script" uid="uid://bumf8e45b3qus" path="res://game/scripts/level.gd" id="5"]
+[ext_resource type="Script" uid="uid://cyqfw7jtgugbr" path="res://game/scripts/gate_destination.gd" id="5_6ynsj"]
 [ext_resource type="PackedScene" uid="uid://c4ogscolghucs" path="res://game/scenes/buttons.tscn" id="6"]
-[ext_resource type="PackedScene" path="res://game/scenes/coin_display.tscn" id="7"]
-[ext_resource type="Script" path="res://addons/thoth/thoth_gamestate.gd" id="8"]
+[ext_resource type="PackedScene" uid="uid://cxmu4a5abigv3" path="res://game/scenes/coin_display.tscn" id="7"]
+[ext_resource type="Script" uid="uid://b146xa42md0k3" path="res://addons/thoth/thoth_gamestate.gd" id="8"]
 
 [node name="level0" type="Node2D"]
 script = ExtResource("5")
@@ -49,12 +49,12 @@ incoming_level = "res://game/levels/level1.tscn"
 [node name="coin_display" parent="." instance=ExtResource("7")]
 position = Vector2(0, 64)
 
-[node name="Savestate" type="Node" parent="."]
-script = ExtResource("8")
-
 [node name="Serializable" type="Node" parent="."]
 script = ExtResource("3_7hjnm")
 transform = false
+
+[node name="Savestate" type="Node" parent="."]
+script = ExtResource("8")
 
 [connection signal="load_pressed" from="buttons" to="." method="_on_buttons_load_pressed"]
 [connection signal="save_pressed" from="buttons" to="." method="_on_buttons_save_pressed"]

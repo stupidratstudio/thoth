@@ -2,12 +2,12 @@
 
 [ext_resource type="PackedScene" uid="uid://bragq3hxlwc6" path="res://test/objects/obj3.tscn" id="1"]
 [ext_resource type="PackedScene" uid="uid://cjeqa7rgd7df6" path="res://test/objects/obj2.tscn" id="2"]
-[ext_resource type="Script" path="res://addons/thoth/thoth_serializable.gd" id="2_8u1ri"]
+[ext_resource type="Script" uid="uid://nmgti4nnwjet" path="res://addons/thoth/thoth_serializable.gd" id="2_8u1ri"]
 [ext_resource type="PackedScene" uid="uid://bmyuihe17qi3r" path="res://test/objects/obj1.tscn" id="3"]
 [ext_resource type="PackedScene" uid="uid://d1d53x22xlnvx" path="res://test/objects/obj0.tscn" id="4"]
-[ext_resource type="Script" path="res://test/scenes/level.gd" id="5"]
+[ext_resource type="Script" uid="uid://65223vx0cjf0" path="res://test/scenes/level.gd" id="5"]
 [ext_resource type="TileSet" path="res://test/scenes/tileset.tres" id="6"]
-[ext_resource type="Script" path="res://addons/thoth/thoth_gamestate.gd" id="7"]
+[ext_resource type="Script" uid="uid://b146xa42md0k3" path="res://addons/thoth/thoth_gamestate.gd" id="7"]
 [ext_resource type="PackedScene" uid="uid://c3b4ot52r7y1h" path="res://test/scenes/buttons.tscn" id="8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xbpie"]

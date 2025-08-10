@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://bdsvyh6tje1ah"]
 
-[ext_resource type="Script" path="res://game/scripts/player.gd" id="1"]
+[ext_resource type="Script" uid="uid://dwfdedon4rvdi" path="res://game/scripts/player.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://dcgyrons4udyd" path="res://game/textures/tinydungeon.png" id="2"]
-[ext_resource type="Script" path="res://addons/thoth/thoth_serializable.gd" id="3_amdyf"]
+[ext_resource type="Script" uid="uid://nmgti4nnwjet" path="res://addons/thoth/thoth_serializable.gd" id="3_amdyf"]
 
 [sub_resource type="CircleShape2D" id="2"]
 radius = 7.0

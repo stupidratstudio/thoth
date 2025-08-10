@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://d1d53x22xlnvx"]
 
-[ext_resource type="Script" path="res://addons/thoth/thoth_serializable.gd" id="1_qr31e"]
+[ext_resource type="Script" uid="uid://nmgti4nnwjet" path="res://addons/thoth/thoth_serializable.gd" id="1_qr31e"]
 [ext_resource type="Texture2D" uid="uid://c0u8fr6w6pdg5" path="res://test/textures/ibis0.png" id="2"]
 
 [sub_resource type="GDScript" id="2"]

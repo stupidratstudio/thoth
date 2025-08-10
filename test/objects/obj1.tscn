@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://bmyuihe17qi3r"]
 
-[ext_resource type="Script" path="res://test/objects/obj1.gd" id="1_8s33j"]
-[ext_resource type="Script" path="res://addons/thoth/thoth_serializable.gd" id="1_rwh1o"]
+[ext_resource type="Script" uid="uid://de3phcsi4iexe" path="res://test/objects/obj1.gd" id="1_8s33j"]
+[ext_resource type="Script" uid="uid://nmgti4nnwjet" path="res://addons/thoth/thoth_serializable.gd" id="1_rwh1o"]
 [ext_resource type="Texture2D" uid="uid://dyljj8i8m0w1y" path="res://test/textures/ibis1.png" id="2"]
 
 [sub_resource type="CircleShape2D" id="1"]
